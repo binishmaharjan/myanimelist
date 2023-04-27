@@ -30,7 +30,19 @@ public enum Asset {
     public static let shadow = ColorAsset(name: "shadow")
   }
   public enum Images {
+    public static let imgBackground1 = ImageAsset(name: "img_background_1")
+    public static let imgBackground10 = ImageAsset(name: "img_background_10")
+    public static let imgBackground2 = ImageAsset(name: "img_background_2")
+    public static let imgBackground3 = ImageAsset(name: "img_background_3")
+    public static let imgBackground4 = ImageAsset(name: "img_background_4")
+    public static let imgBackground5 = ImageAsset(name: "img_background_5")
+    public static let imgBackground6 = ImageAsset(name: "img_background_6")
+    public static let imgBackground7 = ImageAsset(name: "img_background_7")
+    public static let imgBackground8 = ImageAsset(name: "img_background_8")
+    public static let imgBackground9 = ImageAsset(name: "img_background_9")
     public static let imgBlob1 = ImageAsset(name: "img_blob_1")
+    public static let imgWaves = ImageAsset(name: "img_waves")
+    public static let imgWavesCompact = ImageAsset(name: "img_waves_compact")
   }
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
