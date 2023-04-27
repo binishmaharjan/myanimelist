@@ -19,6 +19,7 @@
 		64D4A12029FA9C9D007A15F9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		64D4A12229FA9C9E007A15F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64D4A12529FA9C9E007A15F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		64D4A12F29FAAA4B007A15F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../Shared/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +52,7 @@
 		64D4A11D29FA9C9D007A15F9 /* Development */ = {
 			isa = PBXGroup;
 			children = (
+				64D4A12F29FAAA4B007A15F9 /* Info.plist */,
 				64D4A11E29FA9C9D007A15F9 /* DevelopmentApp.swift */,
 				64D4A12029FA9C9D007A15F9 /* ContentView.swift */,
 				64D4A12229FA9C9E007A15F9 /* Assets.xcassets */,
