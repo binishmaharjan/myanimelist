@@ -10,9 +10,11 @@ let package = Package(
     products: [
         .library(name: "AppKit", targets: ["AppKit"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
+        .library(name: "AppUI", targets: ["AppUI"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
+        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", exact: "6.6.2")
     ],
     targets: [
         .target(
@@ -26,6 +28,16 @@ let package = Package(
             name: "AppFeature",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "AppUI",
+            dependencies: [],
+            resources: [
+                .process("Resources"),
+            ],
+            plugins: [
+                .plugin(name: "SwiftGenPlugin", package: "SwiftGenPlugin"),
             ]
         ),
         .testTarget(
