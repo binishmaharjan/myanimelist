@@ -27,6 +27,7 @@ public enum Asset {
   public enum Colors {
     public static let accentColor = ColorAsset(name: "accent_color")
     public static let background = ColorAsset(name: "background")
+    public static let background2 = ColorAsset(name: "background_2")
     public static let shadow = ColorAsset(name: "shadow")
   }
   public enum Images {
@@ -41,6 +42,7 @@ public enum Asset {
     public static let imgBackground8 = ImageAsset(name: "img_background_8")
     public static let imgBackground9 = ImageAsset(name: "img_background_9")
     public static let imgBlob1 = ImageAsset(name: "img_blob_1")
+    public static let imgMalLogo = ImageAsset(name: "img_mal_logo")
     public static let imgWaves = ImageAsset(name: "img_waves")
     public static let imgWavesCompact = ImageAsset(name: "img_waves_compact")
   }

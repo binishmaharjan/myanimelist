@@ -7,18 +7,37 @@ import Foundation
 
 public struct Root: Reducer {
     public struct State: Equatable {
+        public enum Phase: Equatable {
+            case launch(Launch.State)
+        }
+
+        var phase: Phase = .launch(.init())
         public init() {
         }
     }
 
     public enum Action: Equatable {
+        public enum Phase: Equatable {
+            case launch(Launch.Action)
+        }
+        case phase(Phase)
     }
 
     public init() {}
 
     public var body: some ReducerProtocol<State, Action> {
         Reduce<State, Action> { state, action in
-            return .none
+            switch action {
+            case .phase(.launch):
+                return .none
+            }
+        }
+
+        Scope(state: \.phase, action: /Action.phase) {
+            Reduce { _, _ in return .none }
+                .ifCaseLet(/State.Phase.launch, action: /Action.Phase.launch) {
+                    Launch()
+                }
         }
     }
 }

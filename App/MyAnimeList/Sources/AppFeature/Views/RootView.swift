@@ -2,6 +2,7 @@
 //  Created by Maharjan Binish on 2023/04/27.
 //
 
+import AppUI
 import ComposableArchitecture
 import SwiftUI
 
@@ -13,17 +14,21 @@ public struct RootView: View {
     private let store: StoreOf<Root>
 
     public var body: some View {
-        Text("Root View")
+        SwitchStore(store.scope(state: \.phase, action: Root.Action.phase)) {
+            CaseLet(state: /Root.State.Phase.launch, action: Root.Action.Phase.launch) { store in
+                LaunchView(store: store)
+            }
+        }
     }
 }
 
 struct RootView_Previews: PreviewProvider {
+    static let store: StoreOf<Root> = .init(initialState: .init(), reducer: Root())
     static var previews: some View {
-        RootView(
-            store: .init(
-                initialState: .init(),
-                reducer: Root()
-            )
-        )
+        Group {
+            RootView(store: store)
+                .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+                .previewDisplayName("iPhone 14")
+        }
     }
 }
