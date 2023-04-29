@@ -7,3 +7,20 @@ xcassets:
         output: Generated/Assets.swift
         params:
             publicAccess: true
+# Make sure to add CFBundleLocalizations key to info.plist file
+strings:
+    inputs:
+        - Resources/Localizable/Base.lproj
+    outputs:
+        templateName: structured-swift5
+        output: Generated/Strings.swift
+        params:
+            publicAccess: true
+#files:
+#  inputs: Resources/Animation
+#  filter: .+\.json$
+#  outputs:
+#      templateName: structured-swift5
+#      output: Generated/Animations.swift
+#      params:
+#        publicAccess: true
