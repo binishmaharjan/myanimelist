@@ -11,9 +11,8 @@ public struct Root: Reducer {
             case launch(Launch.State)
         }
 
-        var phase: Phase = .launch(.init())
-        public init() {
-        }
+        var phase: Phase?
+        public init() {}
     }
 
     public enum Action: Equatable {
@@ -21,6 +20,7 @@ public struct Root: Reducer {
             case launch(Launch.Action)
         }
         case phase(Phase)
+        case onAppear
     }
 
     public init() {}
@@ -29,6 +29,10 @@ public struct Root: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .phase(.launch):
+                return .none
+
+            case .onAppear:
+                state.phase = .launch(.init())
                 return .none
             }
         }

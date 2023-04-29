@@ -25,8 +25,11 @@ extension APIClient: TestDependencyKey {
         fetchAppInfo: unimplemented()
     )
 
+    /// Preview value for response
     private static let previewHTTPURLResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-
+    /// Preview value for error
+    private static let previewErrorResponse = ResponseError.api(APIError(code: .notFound, contents: []))
+    /// Preview value
     public static let previewValue = APIClient(
         fetchAppConfig: {
             Response(result: .success(AppConfig(iOS: "1.0.0")), urlResponse: previewHTTPURLResponse)
@@ -70,6 +73,7 @@ extension APIClient {
         let apiSession = APISession(baseURL: baseURL, urlSessionConfiguration: urlSessionConfiguration)
         return APIClient(
             fetchAppConfig: {
+//                return Response(result: .failure(previewErrorResponse), urlResponse: previewHTTPURLResponse)
                 return Response(result: .success(AppConfig(iOS: "1.0.0")), urlResponse: previewHTTPURLResponse)
             },
             fetchAppInfo: {

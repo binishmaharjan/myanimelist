@@ -14,9 +14,20 @@ public struct RootView: View {
     private let store: StoreOf<Root>
 
     public var body: some View {
-        SwitchStore(store.scope(state: \.phase, action: Root.Action.phase)) {
-            CaseLet(state: /Root.State.Phase.launch, action: Root.Action.Phase.launch) { store in
-                LaunchView(store: store)
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            ZStack {
+                IfLetStore(store.scope(state: \.phase, action: Root.Action.phase)) { phaseStore in
+                    SwitchStore(phaseStore) {
+                        CaseLet(state: /Root.State.Phase.launch, action: Root.Action.Phase.launch) { store in
+                            LaunchView(store: store)
+                        }
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
+            .onAppear {
+                viewStore.send(.onAppear)
             }
         }
     }

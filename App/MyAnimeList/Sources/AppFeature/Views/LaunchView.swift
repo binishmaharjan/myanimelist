@@ -20,6 +20,13 @@ internal struct LaunchView: View {
             .onAppear {
                 viewStore.send(.onAppear)
             }
+            .alert(
+                store: self.store.scope(
+                    state: \.$destination, action: Launch.Action.destination
+                ),
+                state: /Launch.Destination.State.alert,
+                action: Launch.Destination.Action.alert
+            )
         }
     }
 }
