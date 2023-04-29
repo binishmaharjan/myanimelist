@@ -40,5 +40,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>EnvironmentAPIBaseURLString</key>
+	<string>$(ENV_API_BASE_URL)</string>
 </dict>
 </plist>

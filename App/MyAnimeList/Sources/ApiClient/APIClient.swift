@@ -52,13 +52,13 @@ private extension Bundle {
 extension APIClient: DependencyKey {
 #if DEBUG
     public static let liveValue = Self.live(
-        baseURL: Bundle.main.environmentAPIBaseURL ?? URL(string: "https://pokeapi.co/api/")!,
+        baseURL: Bundle.main.environmentAPIBaseURL ?? URL(string: "https://api.jikan.moe/")!,
         urlSessionConfiguration: .default
     )
 #else
     public static let liveValue = Self.live(
         // Replace URL
-        baseURL: Bundle.main.environmentAPIBaseURL ?? URL(string: "https://pokeapi.co/api/")!,
+        baseURL: Bundle.main.environmentAPIBaseURL ?? URL(string: "https://api.jikan.moe/")!,
         urlSessionConfiguration: .default
     )
 #endif

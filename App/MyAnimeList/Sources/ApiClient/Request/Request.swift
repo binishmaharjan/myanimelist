@@ -11,6 +11,8 @@ public enum HTTPMethod: String {
 public enum APIVersion: String {
     case v1
     case v2
+    case v3
+    case v4
 
     public var path: String { "/\(rawValue)" }
 }
@@ -30,7 +32,7 @@ public protocol Request<Success> {
 }
 
 extension Request {
-    public var apiVersion: APIVersion { .v2 }
+    public var apiVersion: APIVersion { .v4 }
     public var headerFields: [String: String] { [:] }
     public var queries: [String: String] { [:] }
     public var queryParameters: QueryParameters? {

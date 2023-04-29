@@ -29,6 +29,7 @@ let package = Package(
             name: "AppFeature",
             dependencies: [
                 "AppUI",
+                "APIClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
