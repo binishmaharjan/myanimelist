@@ -5,11 +5,11 @@
 import Foundation
 
 public struct AppConfig: JSONResponseValue, Equatable {
-    public init(iOS: String) {
-        self.iOS = iOS
+    public init(iOSVersion : String) {
+        self.iOSVersion = iOSVersion
     }
 
-    public var iOS: String
+    public var iOSVersion : String
 }
 
 public struct AppInfo: JSONResponseValue {

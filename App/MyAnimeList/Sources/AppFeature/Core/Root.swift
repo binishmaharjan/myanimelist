@@ -4,6 +4,7 @@
 
 import ComposableArchitecture
 import Foundation
+import os.log
 
 public struct Root: Reducer {
     public struct State: Equatable {
@@ -25,15 +26,22 @@ public struct Root: Reducer {
 
     public init() {}
 
+    private let logger = Logger(subsystem: "com.myanimelist", category: "Root")
+
     public var body: some ReducerProtocol<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .phase(.launch):
-                return .none
-
             case .onAppear:
                 state.phase = .launch(.init())
                 return .none
+
+            case .phase(.launch(.delegate(.needsDisplayTermsAndCondition))):
+                logger.debug("root.needsDisplayTermsAndCondition")
+                return .none
+
+            case .phase:
+                return .none
+
             }
         }
 

@@ -12,7 +12,8 @@ let package = Package(
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "APIClient", targets: ["APIClient"]),
-        .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"])
+        .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
+        .library(name: "FeatureKit", targets: ["FeatureKit"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
@@ -31,6 +32,8 @@ let package = Package(
             dependencies: [
                 "AppUI",
                 "APIClient",
+                "UserDefaultsClient",
+                "FeatureKit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -52,6 +55,12 @@ let package = Package(
         ),
         .target(
             name: "UserDefaultsClient",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "FeatureKit",
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]

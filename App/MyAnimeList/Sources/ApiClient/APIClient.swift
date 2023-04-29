@@ -32,7 +32,7 @@ extension APIClient: TestDependencyKey {
     /// Preview value
     public static let previewValue = APIClient(
         fetchAppConfig: {
-            Response(result: .success(AppConfig(iOS: "1.0.0")), urlResponse: previewHTTPURLResponse)
+            Response(result: .success(AppConfig(iOSVersion: "1.0.0")), urlResponse: previewHTTPURLResponse)
         },
         fetchAppInfo: {
             Response(result: .success(AppInfo(termsUpdatedAt: .distantFuture)), urlResponse: previewHTTPURLResponse)
@@ -74,7 +74,7 @@ extension APIClient {
         return APIClient(
             fetchAppConfig: {
 //                return Response(result: .failure(previewErrorResponse), urlResponse: previewHTTPURLResponse)
-                return Response(result: .success(AppConfig(iOS: "1.0.0")), urlResponse: previewHTTPURLResponse)
+                return Response(result: .success(AppConfig(iOSVersion: "1.0.0")), urlResponse: previewHTTPURLResponse)
             },
             fetchAppInfo: {
                 return Response(result: .success(AppInfo(termsUpdatedAt: .distantFuture)), urlResponse: previewHTTPURLResponse)
