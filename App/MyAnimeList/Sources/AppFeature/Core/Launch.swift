@@ -19,12 +19,13 @@ public struct Launch: Reducer {
             case needsDisplayTermsAndCondition
         }
         public enum Alert: Equatable {
-            case randomAction
+            case forceUpdate
         }
 
         case destination(PresentationAction<Destination.Action>)
         case onAppear
         case fetchRequiredAppVersion
+        case openForceUpdateURL
         case requiredAppVersionResponse(TaskResult<AppConfig>)
         case delegate(Delegate)
     }
@@ -47,7 +48,6 @@ public struct Launch: Reducer {
 
         public var body: some ReducerOf<Destination> {
             Reduce { state, action in
-                print("Destination Body")
                 return .none
             }
         }
@@ -57,8 +57,10 @@ public struct Launch: Reducer {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.userDefaultsClient) private var userDefaultsClient
     @Dependency(\.appVersion) private var currentAppVersion
+    @Dependency(\.openURL) private var openURL
 
     private let logger = Logger(subsystem: "com.myanimelist", category: "Launch")
+    private let appStoreURL = URL(string: "https://apps.apple.com/jp/app/myanimelist-official/id1469330778?l=en")!
 
     public var body: some Reducer<State, Action> {
         Reduce<State, Action> { state, action in
@@ -78,19 +80,32 @@ public struct Launch: Reducer {
                     )
                 }
 
+            case .destination(.presented(.alert(.forceUpdate))):
+                logger.debug("alert: force update")
+                state.destination = .alert(.forceUpdateAlert())
+                return .send(.openForceUpdateURL)
+
+            case .openForceUpdateURL:
+                Task { await openURL(appStoreURL) }
+                return .none
+
             case .requiredAppVersionResponse(.success(let appConfig)):
                 logger.debug("requiredAppVersionResponse: success")
-
                 guard let requiredAppVersion = AppVersion.init(rawValue:appConfig.iOSVersion),
                       currentAppVersion < requiredAppVersion else {
                     return .none
                 }
 
-                return .send(.delegate(.needsDisplayTermsAndCondition))
+                state.destination = .alert(.forceUpdateAlert())
+                return .none
 
             case .requiredAppVersionResponse(.failure):
                 logger.debug("requiredAppVersionResponse: failure")
-                state.destination = .alert(.appVersionErrorAlert())
+                state.destination = .alert(.appConfigResponseErrorAlert())
+                return .none
+
+            case .destination(.dismiss):
+                logger.debug("destination: dismiss")
                 return .none
 
             case .destination:
@@ -110,11 +125,23 @@ public struct Launch: Reducer {
 
 // MARK: Alerts
 extension AlertState where Action == Launch.Action.Alert {
-    fileprivate static func appVersionErrorAlert() -> AlertState {
+    fileprivate static func appConfigResponseErrorAlert() -> AlertState {
         AlertState {
             TextState("Error")
         } message: {
             TextState("Couldn't fetch the data.")
+        }
+    }
+
+    fileprivate static func forceUpdateAlert() -> AlertState {
+        AlertState {
+            TextState("Force Update")
+        } actions: {
+            ButtonState(role: .cancel, action: .send(.forceUpdate)) {
+                TextState("Update")
+            }
+        } message: {
+            TextState("A new version has been released. Please update the app.")
         }
     }
 }
