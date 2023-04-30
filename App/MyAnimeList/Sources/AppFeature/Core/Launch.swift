@@ -11,6 +11,7 @@ import os.log
 
 /*
  retry on error
+ custom fullscreen error
  */
 
 public struct Launch: Reducer {

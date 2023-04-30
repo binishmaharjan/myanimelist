@@ -45,7 +45,6 @@ public struct Root: Reducer {
 
             case .phase:
                 return .none
-
             }
         }
 
