@@ -35,8 +35,12 @@ public struct Root: Reducer {
                 state.phase = .launch(.init())
                 return .none
 
-            case .phase(.launch(.delegate(.needsDisplayTermsAndCondition))):
-                logger.debug("root.needsDisplayTermsAndCondition")
+            case .phase(.launch(.delegate(.needsTermsAndCondition))):
+                logger.debug("termsAndCondition")
+                return .none
+
+            case .phase(.launch(.delegate(.login))):
+                logger.debug("login")
                 return .none
 
             case .phase:

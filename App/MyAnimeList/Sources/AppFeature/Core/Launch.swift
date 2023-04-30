@@ -9,6 +9,10 @@ import UserDefaultsClient
 import FeatureKit
 import os.log
 
+/*
+ retry on error
+ */
+
 public struct Launch: Reducer {
     public struct State: Equatable {
         @PresentationState var destination: Destination.State?
@@ -16,7 +20,8 @@ public struct Launch: Reducer {
 
     public enum Action: Equatable {
         public enum Delegate: Equatable {
-            case needsDisplayTermsAndCondition
+            case needsTermsAndCondition
+            case login
         }
         public enum Alert: Equatable {
             case forceUpdate
@@ -27,6 +32,8 @@ public struct Launch: Reducer {
         case fetchRequiredAppVersion
         case openForceUpdateURL
         case requiredAppVersionResponse(TaskResult<AppConfig>)
+        case fetchAppInfo
+        case appInfoResponse(TaskResult<AppInfo>)
         case delegate(Delegate)
     }
 
@@ -71,7 +78,7 @@ public struct Launch: Reducer {
 
             case .fetchRequiredAppVersion:
                 return .task {
-                    try await clock.sleep(for: .seconds(3))
+                    try await clock.sleep(for: .seconds(1))
                     logger.debug("fetchRequiredAppVersion")
                     return await .requiredAppVersionResponse(
                         TaskResult{
@@ -93,7 +100,7 @@ public struct Launch: Reducer {
                 logger.debug("requiredAppVersionResponse: success")
                 guard let requiredAppVersion = AppVersion.init(rawValue:appConfig.iOSVersion),
                       currentAppVersion < requiredAppVersion else {
-                    return .none
+                    return .send(.fetchAppInfo)
                 }
 
                 state.destination = .alert(.forceUpdateAlert())
@@ -101,7 +108,32 @@ public struct Launch: Reducer {
 
             case .requiredAppVersionResponse(.failure):
                 logger.debug("requiredAppVersionResponse: failure")
-                state.destination = .alert(.appConfigResponseErrorAlert())
+                state.destination = .alert(.responseErrorAlert())
+                return .none
+
+            case .fetchAppInfo:
+                logger.debug("fetchAppInfo")
+                return .task {
+                    try await clock.sleep(for: .seconds(1))
+                    return await .appInfoResponse(
+                        TaskResult {
+                            try await apiClient.fetchAppInfo().value
+                        }
+                    )
+                }
+
+            case .appInfoResponse(.success(let appInfo)):
+                logger.debug("appInfoResponse: success")
+                let currentTermsOfUseAgreedDate = userDefaultsClient.termsOfUseAgreedDate() ?? .distantPast
+                guard currentTermsOfUseAgreedDate < appInfo.termsUpdatedAt else {
+                    return .send(.delegate(.login))
+                }
+
+                return .send(.delegate(.needsTermsAndCondition))
+
+            case .appInfoResponse(.failure):
+                logger.debug("appInfoResponse: error")
+                state.destination = .alert(.responseErrorAlert())
                 return .none
 
             case .destination(.dismiss):
@@ -125,7 +157,7 @@ public struct Launch: Reducer {
 
 // MARK: Alerts
 extension AlertState where Action == Launch.Action.Alert {
-    fileprivate static func appConfigResponseErrorAlert() -> AlertState {
+    fileprivate static func responseErrorAlert() -> AlertState {
         AlertState {
             TextState("Error")
         } message: {

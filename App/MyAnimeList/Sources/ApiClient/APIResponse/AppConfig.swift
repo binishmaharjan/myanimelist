@@ -12,7 +12,7 @@ public struct AppConfig: JSONResponseValue, Equatable {
     public var iOSVersion : String
 }
 
-public struct AppInfo: JSONResponseValue {
+public struct AppInfo: JSONResponseValue , Equatable {
     public init(termsUpdatedAt: Date) {
         self.termsUpdatedAt = termsUpdatedAt
     }
