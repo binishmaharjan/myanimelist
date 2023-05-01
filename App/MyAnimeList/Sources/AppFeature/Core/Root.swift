@@ -10,6 +10,7 @@ public struct Root: Reducer {
     public struct State: Equatable {
         public enum Phase: Equatable {
             case launch(Launch.State)
+            case termsOfUse(TermsOfUse.State)
         }
 
         var phase: Phase?
@@ -19,6 +20,7 @@ public struct Root: Reducer {
     public enum Action: Equatable {
         public enum Phase: Equatable {
             case launch(Launch.Action)
+            case termsOfUse(TermsOfUse.Action)
         }
         case phase(Phase)
         case onAppear
@@ -35,11 +37,13 @@ public struct Root: Reducer {
                 state.phase = .launch(.init())
                 return .none
 
-            case .phase(.launch(.delegate(.needsTermsAndCondition))):
-                logger.debug("termsAndCondition")
+            case .phase(.launch(.delegate(.needsTermsOfUseAgreement(let latestUpdateDate)))):
+                logger.debug("termsAndCondition: \(latestUpdateDate)")
+                state.phase = .termsOfUse(.init(latestUpdateDate: latestUpdateDate))
                 return .none
 
-            case .phase(.launch(.delegate(.login))):
+            case .phase(.launch(.delegate(.login))),
+                 .phase(.termsOfUse(.delegate(.login))):
                 logger.debug("login")
                 return .none
 
@@ -47,12 +51,13 @@ public struct Root: Reducer {
                 return .none
             }
         }
-
-        Scope(state: \.phase, action: /Action.phase) {
-            Reduce { _, _ in return .none }
-                .ifCaseLet(/State.Phase.launch, action: /Action.Phase.launch) {
-                    Launch()
-                }
+        .ifLet(\.phase, action: /Action.phase) {
+            Scope(state: /State.Phase.launch, action: /Action.Phase.launch) {
+                Launch()
+            }
+            Scope(state: /State.Phase.termsOfUse, action: /Action.Phase.termsOfUse) {
+                TermsOfUse()
+            }
         }
     }
 }

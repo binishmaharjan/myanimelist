@@ -6,7 +6,7 @@ import AppUI
 import ComposableArchitecture
 import SwiftUI
 
-internal struct LaunchView: View {
+struct LaunchView: View {
     var store: StoreOf<Launch>
 
     var body: some View {
@@ -16,7 +16,7 @@ internal struct LaunchView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea()
-            .background(Asset.Colors.background.swiftUIColor)
+            .background(Color.app(.primary))
             .onAppear {
                 viewStore.send(.onAppear)
             }

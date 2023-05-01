@@ -21,7 +21,7 @@ public struct Launch: Reducer {
 
     public enum Action: Equatable {
         public enum Delegate: Equatable {
-            case needsTermsAndCondition
+            case needsTermsOfUseAgreement(latestUpdateDate: Date)
             case login
         }
         public enum Alert: Equatable {
@@ -125,12 +125,13 @@ public struct Launch: Reducer {
 
             case .appInfoResponse(.success(let appInfo)):
                 logger.debug("appInfoResponse: success")
-                let currentTermsOfUseAgreedDate = userDefaultsClient.termsOfUseAgreedDate() ?? .distantPast
-                guard currentTermsOfUseAgreedDate < appInfo.termsUpdatedAt else {
+                let savedTermsOfUseAgreedDate = userDefaultsClient.termsOfUseAgreedDate() ?? .distantPast
+                let currentTermsOfUseAgreedDate = appInfo.termsUpdatedAt
+                guard savedTermsOfUseAgreedDate < currentTermsOfUseAgreedDate else {
                     return .send(.delegate(.login))
                 }
 
-                return .send(.delegate(.needsTermsAndCondition))
+                return .send(.delegate(.needsTermsOfUseAgreement(latestUpdateDate: currentTermsOfUseAgreedDate)))
 
             case .appInfoResponse(.failure):
                 logger.debug("appInfoResponse: error")

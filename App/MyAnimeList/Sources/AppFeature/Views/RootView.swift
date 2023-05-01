@@ -18,8 +18,14 @@ public struct RootView: View {
             ZStack {
                 IfLetStore(store.scope(state: \.phase, action: Root.Action.phase)) { phaseStore in
                     SwitchStore(phaseStore) {
+                        // Launch
                         CaseLet(state: /Root.State.Phase.launch, action: Root.Action.Phase.launch) { store in
                             LaunchView(store: store)
+                        }
+
+                        // Terms Of use
+                        CaseLet(state: /Root.State.Phase.termsOfUse, action: Root.Action.Phase.termsOfUse) { store in
+                            TermsOfUseView(store: store)
                         }
                     }
                 }

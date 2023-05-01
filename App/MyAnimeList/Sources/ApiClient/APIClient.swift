@@ -77,7 +77,7 @@ extension APIClient {
                 return Response(result: .success(AppConfig(iOSVersion: "1.0.0")), urlResponse: previewHTTPURLResponse)
             },
             fetchAppInfo: {
-                return Response(result: .success(AppInfo(termsUpdatedAt: .distantFuture)), urlResponse: previewHTTPURLResponse)
+                return Response(result: .success(AppInfo(termsUpdatedAt: Date(timeIntervalSince1970: 0))), urlResponse: previewHTTPURLResponse)
             }
         )
     }
