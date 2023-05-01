@@ -7,10 +7,13 @@ import ComposableArchitecture
 import SwiftUI
 
 struct LaunchView: View {
+    struct ViewState: Equatable {
+        init(state: Launch.State) { }
+    }
     var store: StoreOf<Launch>
 
     var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: ViewState.init) { viewStore in
             ZStack {
                 Asset.Images.imgMalLogo.swiftUIImage
             }

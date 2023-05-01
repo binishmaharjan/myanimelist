@@ -7,6 +7,14 @@ import ComposableArchitecture
 import SwiftUI
 
 public struct RootView: View {
+    struct ViewState: Equatable {
+        var phase: Root.State.Phase?
+
+        init(state: Root.State) {
+            self.phase = state.phase
+        }
+    }
+    
     public init(store: StoreOf<Root>) {
         self.store = store
     }
@@ -14,7 +22,7 @@ public struct RootView: View {
     private let store: StoreOf<Root>
 
     public var body: some View {
-        WithViewStore(store, observe: { $0 }) { viewStore in
+        WithViewStore(store, observe: ViewState.init) { viewStore in
             ZStack {
                 IfLetStore(store.scope(state: \.phase, action: Root.Action.phase)) { phaseStore in
                     SwitchStore(phaseStore) {
