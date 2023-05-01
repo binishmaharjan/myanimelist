@@ -26,6 +26,11 @@ public struct Launch: Reducer {
         }
         public enum Alert: Equatable {
             case forceUpdate
+            case retry(Retry)
+        }
+        public enum Retry: Equatable {
+            case appVersion
+            case appInfo
         }
 
         case destination(PresentationAction<Destination.Action>)
@@ -88,15 +93,6 @@ public struct Launch: Reducer {
                     )
                 }
 
-            case .destination(.presented(.alert(.forceUpdate))):
-                logger.debug("alert: force update")
-                state.destination = .alert(.forceUpdateAlert())
-                return .send(.openForceUpdateURL)
-
-            case .openForceUpdateURL:
-                Task { await openURL(appStoreURL) }
-                return .none
-
             case .requiredAppVersionResponse(.success(let appConfig)):
                 logger.debug("requiredAppVersionResponse: success")
                 guard let requiredAppVersion = AppVersion.init(rawValue:appConfig.iOSVersion),
@@ -109,8 +105,17 @@ public struct Launch: Reducer {
 
             case .requiredAppVersionResponse(.failure):
                 logger.debug("requiredAppVersionResponse: failure")
-                state.destination = .alert(.responseErrorAlert())
+                state.destination = .alert(.appVersionErrorAlert())
                 return .none
+
+            case .openForceUpdateURL:
+                logger.debug("openForceUpdateURL")
+                Task { await openURL(appStoreURL) }
+                return .none
+
+            case .destination(.presented(.alert(.retry(.appVersion)))):
+                logger.debug("appVersionResponse: retry")
+                return .send(.fetchRequiredAppVersion)
 
             case .fetchAppInfo:
                 logger.debug("fetchAppInfo")
@@ -135,8 +140,17 @@ public struct Launch: Reducer {
 
             case .appInfoResponse(.failure):
                 logger.debug("appInfoResponse: error")
-                state.destination = .alert(.responseErrorAlert())
+                state.destination = .alert(.appInfoErrorAlert())
                 return .none
+
+            case .destination(.presented(.alert(.forceUpdate))):
+                logger.debug("alert: force update")
+                state.destination = .alert(.forceUpdateAlert())
+                return .send(.openForceUpdateURL)
+
+            case .destination(.presented(.alert(.retry(.appInfo)))):
+                logger.debug("appInfoResponse: retry")
+                return .send(.fetchAppInfo)
 
             case .destination(.dismiss):
                 logger.debug("destination: dismiss")
@@ -159,9 +173,25 @@ public struct Launch: Reducer {
 
 // MARK: Alerts
 extension AlertState where Action == Launch.Action.Alert {
-    fileprivate static func responseErrorAlert() -> AlertState {
+    fileprivate static func appVersionErrorAlert() -> AlertState {
         AlertState {
             TextState("Error")
+        } actions: {
+            ButtonState(role: .cancel, action: .send(.retry(.appVersion))) {
+                TextState("Retry")
+            }
+        } message: {
+            TextState("Couldn't fetch the data.")
+        }
+    }
+
+    fileprivate static func appInfoErrorAlert() -> AlertState {
+        AlertState {
+            TextState("Error")
+        } actions: {
+            ButtonState(role: .cancel, action: .send(.retry(.appInfo))) {
+                TextState("Retry")
+            }
         } message: {
             TextState("Couldn't fetch the data.")
         }
