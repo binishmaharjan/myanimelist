@@ -4,6 +4,7 @@
 
 import Foundation
 import ComposableArchitecture
+import os.log
 
 public struct Authentication: Reducer {
     public struct State: Equatable {
@@ -17,9 +18,15 @@ public struct Authentication: Reducer {
 
     public init(){ }
 
-    public var body: some ReducerOf<Authentication> {
-        Reduce { state, action in
+    private let logger = Logger(subsystem: "com.myanimelist", category: "Authentication")
+
+    public var body: some Reducer<State, Action> {
+        Reduce<State, Action> { state, action in
             switch action {
+            case .signIn(.delegate(.signUp)):
+                logger.debug("signUp")
+                return .none
+                
             case .signIn:
                 return .none
 

@@ -91,6 +91,7 @@ struct SignInView: View {
                     } label: {
                         AngularButton(title: "Sign In")
                     }
+                    .disabled(viewStore.state.isSignInButtonDisabled)
 
                     Divider()
 

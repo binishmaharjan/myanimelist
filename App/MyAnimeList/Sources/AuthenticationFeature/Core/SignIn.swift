@@ -10,10 +10,17 @@ public struct SignIn: Reducer {
     public struct State: Equatable {
         @BindingState var username: String = ""
         @BindingState var password: String = ""
+        var isSignInButtonDisabled: Bool {
+            username.isEmpty || password.isEmpty
+        }
     }
 
     public enum Action: BindableAction, Equatable {
+        public enum Delegate: Equatable {
+            case signUp
+        }
         case signInButtonTapped
+        case delegate(Delegate)
         case binding(BindingAction<State>)
     }
 
@@ -22,11 +29,11 @@ public struct SignIn: Reducer {
     public var body: some Reducer<State, Action> {
         BindingReducer()
 
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .signInButtonTapped:
                 logger.debug("signInButtonTapped")
-                return .none
+                return .send(.delegate(.signUp))
 
             case .binding(\.$username): // TODO: Remove
                 let username = state.username
@@ -36,6 +43,9 @@ public struct SignIn: Reducer {
             case .binding(\.$password):  // TODO: Remove
                 let password = state.password
                 logger.debug("\(password)")
+                return .none
+
+            case .delegate:
                 return .none
 
             case .binding:

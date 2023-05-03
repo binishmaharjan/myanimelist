@@ -56,12 +56,14 @@ public struct AuthenticationView: View {
 }
 
 struct AuthenticationView_Previews: PreviewProvider {
+    static let store: StoreOf<Authentication> = .init(initialState: .init(), reducer: Authentication())
     static var previews: some View {
-        AuthenticationView(
-            store: .init(
-                initialState: .init(),
-                reducer: Authentication()
-            )
-        )
+        Group {
+            AuthenticationView(store: store)
+
+            AuthenticationView(store: store)
+            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+            .previewDisplayName("iPhone 8")
+        }
     }
 }
