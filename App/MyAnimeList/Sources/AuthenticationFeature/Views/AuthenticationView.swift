@@ -27,10 +27,17 @@ public struct AuthenticationView: View {
 
             GeometryReader { proxy in
                 Group {
-                    SignInView(
+//                    SignInView(
+//                        store: store.scope(
+//                            state: \.signIn,
+//                            action: Authentication.Action.signIn
+//                        )
+//                    )
+
+                    SignUpView(
                         store: store.scope(
-                            state: \.signIn,
-                            action: Authentication.Action.signIn
+                            state: \.signUp,
+                            action: Authentication.Action.signUp
                         )
                     )
                 }

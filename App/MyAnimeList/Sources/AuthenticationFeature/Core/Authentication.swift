@@ -11,10 +11,12 @@ public struct Authentication: Reducer {
     public struct State: Equatable {
         public init() { }
         var signIn: SignIn.State = SignIn.State()
+        var signUp: SignUp.State = SignUp.State()
     }
 
     public enum Action: Equatable{
         case signIn(SignIn.Action)
+        case signUp(SignUp.Action)
     }
 
     public init(){ }
@@ -35,11 +37,17 @@ public struct Authentication: Reducer {
             case .signIn:
                 return .none
 
+            case .signUp:
+                return .none
             }
         }
         
         Scope(state: \.signIn, action: /Action.signIn) {
             SignIn()
+        }
+
+        Scope(state: \.signUp, action: /Action.signUp) {
+            SignUp()
         }
     }
 }

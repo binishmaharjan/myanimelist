@@ -43,16 +43,6 @@ public struct SignIn: Reducer {
                 logger.debug("signUpTextTapped")
                 return .send(.delegate(.showSignUp))
 
-            case .binding(\.$username): // TODO: Remove
-                let username = state.username
-                logger.debug("\(username)")
-                return .none
-
-            case .binding(\.$password):  // TODO: Remove
-                let password = state.password
-                logger.debug("\(password)")
-                return .none
-
             case .delegate:
                 return .none
 
