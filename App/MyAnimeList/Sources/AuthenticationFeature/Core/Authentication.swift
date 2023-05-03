@@ -9,9 +9,15 @@ import os.log
 
 public struct Authentication: Reducer {
     public struct State: Equatable {
+        public enum Phase: Equatable {
+            case signIn
+            case signUp
+        }
+
         public init() { }
         var signIn: SignIn.State = SignIn.State()
         var signUp: SignUp.State = SignUp.State()
+        var phase: Phase = .signUp
     }
 
     public enum Action: Equatable{
@@ -28,10 +34,20 @@ public struct Authentication: Reducer {
             switch action {
             case .signIn(.delegate(.showSignUp)):
                 logger.debug("showSignUp")
+                state.phase = .signUp
                 return .none
 
             case .signIn(.delegate(.signInUser(let request))):
-                logger.debug("showSignUp: username: \(request.username)")
+                logger.debug("signInUser: username: \(request.username)")
+                return .none
+
+            case .signUp(.delegate(.showSignIn)):
+                state.phase = .signIn
+                logger.debug("showSignIn")
+                return .none
+
+            case .signUp(.delegate(.signUpUser(let request))):
+                logger.debug("signUpUser")
                 return .none
                 
             case .signIn:

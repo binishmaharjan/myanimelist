@@ -36,11 +36,12 @@ public struct SignUp: Reducer {
             switch action {
             case .signUpButtonTapped:
                 logger.debug("signUpButtonTapped")
-                return .none
+                let request = SignInRequest(username: state.username, password: state.password)
+                return .send(.delegate(.signUpUser(request)))
 
             case .signInTextTapped:
                 logger.debug("signInTextTapped")
-                return .none
+                return .send(.delegate(.showSignIn))
 
             case .delegate:
                 return .none
