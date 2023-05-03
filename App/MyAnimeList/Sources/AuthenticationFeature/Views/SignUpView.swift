@@ -109,7 +109,7 @@ public struct SignUpView: View {
             }
             .coordinateSpace(name: "stack")
             .padding(20)
-            .padding(.vertical, 20)
+            .padding(.vertical, 5)
             .background(.ultraThinMaterial)
             .backgroundColor(opacity: 0.4)
             .cornerRadius(30)

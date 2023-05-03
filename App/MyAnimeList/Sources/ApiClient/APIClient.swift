@@ -9,6 +9,7 @@ public struct APIClient {
     public var fetchAppConfig: @Sendable () async throws -> Response<AppConfig>
     public var fetchAppInfo: @Sendable () async throws -> Response<AppInfo>
     public var signIn: @Sendable (SignInRequest) async throws -> Response<User>
+    public var signUp: @Sendable (SignUpRequest) async throws -> Response<User>
 }
 
 // MARK: DependencyValues
@@ -24,7 +25,8 @@ extension APIClient: TestDependencyKey {
     public static let testValue = APIClient(
         fetchAppConfig: unimplemented(),
         fetchAppInfo: unimplemented(),
-        signIn: unimplemented()
+        signIn: unimplemented(),
+        signUp: unimplemented()
     )
 
     /// Preview value for response
@@ -45,6 +47,18 @@ extension APIClient: TestDependencyKey {
                     User(
                         id: "id009",
                         username: signInRequest.username,
+                        firstName: "First",
+                        lastName: "Last")
+                ),
+                urlResponse: previewHTTPURLResponse
+            )
+        },
+        signUp:  { signUpRequest in
+            Response(
+                result: .success(
+                    User(
+                        id: "id009",
+                        username: signUpRequest.username,
                         firstName: "First",
                         lastName: "Last")
                 ),
@@ -99,6 +113,18 @@ extension APIClient {
                         User(
                             id: "id009",
                             username: signInRequest.username,
+                            firstName: "First",
+                            lastName: "Last")
+                    ),
+                    urlResponse: previewHTTPURLResponse
+                )
+            },
+            signUp:  { signUpRequest in
+                Response(
+                    result: .success(
+                        User(
+                            id: "id009",
+                            username: signUpRequest.username,
                             firstName: "First",
                             lastName: "Last")
                     ),

@@ -19,7 +19,7 @@ public struct SignUp: Reducer {
     public enum Action: BindableAction, Equatable {
         public enum Delegate: Equatable {
             case showSignIn
-            case signUpUser(SignInRequest)
+            case signUpUser(SignUpRequest)
         }
         case onAppear
         case signUpButtonTapped
@@ -43,7 +43,7 @@ public struct SignUp: Reducer {
 
             case .signUpButtonTapped:
                 logger.debug("signUpButtonTapped")
-                let request = SignInRequest(username: state.username, password: state.password)
+                let request = SignUpRequest(username: state.username, password: state.password)
                 return .send(.delegate(.signUpUser(request)))
 
             case .signInTextTapped:

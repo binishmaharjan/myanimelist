@@ -1,10 +1,10 @@
 //
-//  Created by Maharjan Binish on 2023/05/02.
+//  Created by Maharjan Binish on 2023/05/03.
 //
 
 import Foundation
 
-public struct SignInRequest: Request, Equatable {
+public struct SignUpRequest: Request, Equatable {
     public typealias Success = User
 
     public init(username: String, password: String) {
@@ -13,11 +13,12 @@ public struct SignInRequest: Request, Equatable {
     }
 
     public var method: HTTPMethod { .get }
-    public var path: String { "/signin" }
+    public var path: String { "/signup" }
 
     public var username: String
     public var password: String
 
+    /*
     public var body: RequestBody? {
         JSONRequestBody {
             [
@@ -26,15 +27,15 @@ public struct SignInRequest: Request, Equatable {
             ]
         }
     }
+     */
 
-    /*
-     struct Parameter: Encodable {
+     struct Parameter: JSONEncodable {
          var username: String
          var password: String
      }
 
      public var body: RequestBody? {
-         EncodableJSONRequestBody(value: parameters)
+         let parameters = Parameter(username: username, password: password)
+         return EncodableJSONRequestBody(value: parameters)
      }
-     */
 }
