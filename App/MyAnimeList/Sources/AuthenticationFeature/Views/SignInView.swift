@@ -40,7 +40,7 @@ struct SignInView: View {
 
                 // Description
                 Text("Welcome to MyAnimeList, the world's most active online anime and manga community and database. ")
-                    .font(.app(.body2))
+                    .font(.app(.title5))
                     .foregroundStyle(.secondary)
                     .slideFadeIn(show: animationOrder.description, offset: 20)
 
@@ -121,7 +121,10 @@ struct SignInView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
             .outlineOverlay(cornerRadius: 30)
-            .onAppear { startInitialAnimations() }
+            .onAppear {
+                viewStore.send(.onAppear)
+                startInitialAnimations()
+            }
         }
     }
 

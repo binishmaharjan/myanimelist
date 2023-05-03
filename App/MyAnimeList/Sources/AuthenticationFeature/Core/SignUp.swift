@@ -21,6 +21,7 @@ public struct SignUp: Reducer {
             case showSignIn
             case signUpUser(SignInRequest)
         }
+        case onAppear
         case signUpButtonTapped
         case signInTextTapped
         case delegate(Delegate)
@@ -34,6 +35,12 @@ public struct SignUp: Reducer {
         
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                logger.debug("onAppear")
+                state.username = ""
+                state.password = ""
+                return .none
+
             case .signUpButtonTapped:
                 logger.debug("signUpButtonTapped")
                 let request = SignInRequest(username: state.username, password: state.password)

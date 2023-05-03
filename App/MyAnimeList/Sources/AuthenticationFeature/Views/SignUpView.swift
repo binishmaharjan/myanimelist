@@ -35,7 +35,7 @@ public struct SignUpView: View {
 
                 // Description
                 Text("Welcome to MyAnimeList, the world's most active online anime and manga community and database. ")
-                    .font(.app(.body2))
+                    .font(.app(.title5))
                     .foregroundStyle(.secondary)
                     .slideFadeIn(show: animationOrder.description, offset: 20)
 
@@ -90,7 +90,7 @@ public struct SignUpView: View {
 
                     // Caution
                     Text("By clicking on Sign up, you agree to our **[Terms of service](https://myanimelist.net/membership/terms_of_use)** and **[Privacy policy](https://myanimelist.net/about/privacy_policy)**.")
-                        .font(.footnote)
+                        .font(.app(.body3))
                         .foregroundColor(.primary.opacity(0.7))
                         .accentColor(.primary.opacity(0.7))
 
@@ -122,10 +122,13 @@ public struct SignUpView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             }
             .outlineOverlay(cornerRadius: 30)
-            .onAppear { startInitialAnimations() }
+            .onAppear {
+                viewStore.send(.onAppear)
+                startInitialAnimations()
+            }
         }
     }
-
+    
     private func startInitialAnimations() {
         withAnimation(.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8).delay(0.2)) {
             animationOrder.title = true
