@@ -23,14 +23,4 @@ public struct PokemonRequest: Request {
             "limit": .string(String(limit)),
         ]
     }
-
-//    public var body: RequestBody? {
-//        JSONRequestBody {
-//            [
-//                "title": title,
-//                "image": base64Image,
-//                "is_required": isRequired ? 1 : 0,
-//            ]
-//        }
-//    }
 }

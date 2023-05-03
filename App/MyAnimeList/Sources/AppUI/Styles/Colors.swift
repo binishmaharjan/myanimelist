@@ -31,6 +31,8 @@ import SwiftUI
 /// view.layer.shadowColor = UIColor(appColor: .bk2).cgColor
 /// ```
 public enum AppColor: String, CaseIterable, View {
+    /// \#F2F6FF
+    case background
     /// \#2e55a5
     case primary
     /// \#6234D5

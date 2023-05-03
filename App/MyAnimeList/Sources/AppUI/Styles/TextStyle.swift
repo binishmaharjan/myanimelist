@@ -22,6 +22,8 @@ extension Font {
     /// label.font = .preferredFont(forAppTextStyle: .body)
     /// ```
     public enum AppTextStyle: Hashable {
+        /// Size is 40 points and weight is bold.
+        case largeTitle
         /// Size is 20 points and weight is semibold.
         case title
         /// Size is 18 points and weight is semibold.
@@ -47,6 +49,8 @@ extension Font {
 extension Font.AppTextStyle {
     public var size: CGFloat {
         switch self {
+        case .largeTitle:
+            return 40.0
         case .title:
             return 20.0
         case .title2:
@@ -71,8 +75,9 @@ extension Font.AppTextStyle {
 
     public var weight: Font.Weight {
         switch self {
+        case .largeTitle:
+            return .bold
         case .title, .title2, .title3, .title4, .title5:
-            //
             return .semibold
         case .body, .body2, .body3, .body4:
             return .regular

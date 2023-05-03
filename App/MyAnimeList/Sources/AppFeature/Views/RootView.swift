@@ -5,6 +5,7 @@
 import AppUI
 import ComposableArchitecture
 import SwiftUI
+import AuthenticationFeature
 
 public struct RootView: View {
     struct ViewState: Equatable {
@@ -34,6 +35,11 @@ public struct RootView: View {
                         // Terms Of use
                         CaseLet(state: /Root.State.Phase.termsOfUse, action: Root.Action.Phase.termsOfUse) { store in
                             TermsOfUseView(store: store)
+                        }
+
+                        // Authentication
+                        CaseLet(state: /Root.State.Phase.authentication, action: Root.Action.Phase.authentication) { store in
+                            AuthenticationView(store: store)
                         }
                     }
                 }

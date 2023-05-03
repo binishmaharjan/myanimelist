@@ -5,12 +5,14 @@
 import ComposableArchitecture
 import Foundation
 import os.log
+import AuthenticationFeature
 
 public struct Root: Reducer {
     public struct State: Equatable {
         public enum Phase: Equatable {
             case launch(Launch.State)
             case termsOfUse(TermsOfUse.State)
+            case authentication(Authentication.State)
         }
 
         var phase: Phase?
@@ -21,6 +23,7 @@ public struct Root: Reducer {
         public enum Phase: Equatable {
             case launch(Launch.Action)
             case termsOfUse(TermsOfUse.Action)
+            case authentication(Authentication.Action)
         }
         case phase(Phase)
         case onAppear
@@ -45,6 +48,7 @@ public struct Root: Reducer {
             case .phase(.launch(.delegate(.login))),
                  .phase(.termsOfUse(.delegate(.login))):
                 logger.debug("login")
+                state.phase = .authentication(.init())
                 return .none
 
             case .phase:
@@ -58,6 +62,10 @@ public struct Root: Reducer {
             Scope(state: /State.Phase.termsOfUse, action: /Action.Phase.termsOfUse) {
                 TermsOfUse()
             }
+            Scope(state: /State.Phase.authentication, action: /Action.Phase.authentication) {
+                Authentication()
+            }
         }
+
     }
 }

@@ -8,6 +8,7 @@ import Dependencies
 public struct APIClient {
     public var fetchAppConfig: @Sendable () async throws -> Response<AppConfig>
     public var fetchAppInfo: @Sendable () async throws -> Response<AppInfo>
+    public var signIn: @Sendable (LoginRequest) async throws -> Response<User>
 }
 
 // MARK: DependencyValues
@@ -22,7 +23,8 @@ extension DependencyValues {
 extension APIClient: TestDependencyKey {
     public static let testValue = APIClient(
         fetchAppConfig: unimplemented(),
-        fetchAppInfo: unimplemented()
+        fetchAppInfo: unimplemented(),
+        signIn: unimplemented()
     )
 
     /// Preview value for response
@@ -36,6 +38,18 @@ extension APIClient: TestDependencyKey {
         },
         fetchAppInfo: {
             Response(result: .success(AppInfo(termsUpdatedAt: .distantFuture)), urlResponse: previewHTTPURLResponse)
+        },
+        signIn: { loginRequest in
+            Response(
+                result: .success(
+                    User(
+                        id: "id009",
+                        username: loginRequest.username,
+                        firstName: "First",
+                        lastName: "Last")
+                ),
+                urlResponse: previewHTTPURLResponse
+            )
         }
     )
 }
@@ -78,6 +92,18 @@ extension APIClient {
             },
             fetchAppInfo: {
                 return Response(result: .success(AppInfo(termsUpdatedAt: Date(timeIntervalSince1970: 0))), urlResponse: previewHTTPURLResponse)
+            },
+            signIn: { loginRequest in
+                Response(
+                    result: .success(
+                        User(
+                            id: "id009",
+                            username: loginRequest.username,
+                            firstName: "First",
+                            lastName: "Last")
+                    ),
+                    urlResponse: previewHTTPURLResponse
+                )
             }
         )
     }

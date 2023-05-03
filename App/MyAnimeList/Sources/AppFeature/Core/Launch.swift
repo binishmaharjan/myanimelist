@@ -10,7 +10,6 @@ import FeatureKit
 import os.log
 
 /*
- retry on error
  custom fullscreen error
  */
 

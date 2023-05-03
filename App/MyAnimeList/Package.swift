@@ -13,7 +13,8 @@ let package = Package(
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "APIClient", targets: ["APIClient"]),
         .library(name: "UserDefaultsClient", targets: ["UserDefaultsClient"]),
-        .library(name: "FeatureKit", targets: ["FeatureKit"])
+        .library(name: "FeatureKit", targets: ["FeatureKit"]),
+        .library(name: "AuthenticationFeature", targets: ["AuthenticationFeature"])
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
@@ -34,6 +35,7 @@ let package = Package(
                 "APIClient",
                 "UserDefaultsClient",
                 "FeatureKit",
+                "AuthenticationFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -62,6 +64,15 @@ let package = Package(
         .target(
             name: "FeatureKit",
             dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "AuthenticationFeature",
+            dependencies: [
+                "APIClient",
+                "AppUI",
+                "UserDefaultsClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
