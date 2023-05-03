@@ -21,7 +21,7 @@ public struct Launch: Reducer {
     public enum Action: Equatable {
         public enum Delegate: Equatable {
             case needsTermsOfUseAgreement(latestUpdateDate: Date)
-            case login
+            case showLogin
         }
         public enum Alert: Equatable {
             case forceUpdate
@@ -132,7 +132,7 @@ public struct Launch: Reducer {
                 let savedTermsOfUseAgreedDate = userDefaultsClient.termsOfUseAgreedDate() ?? .distantPast
                 let currentTermsOfUseAgreedDate = appInfo.termsUpdatedAt
                 guard savedTermsOfUseAgreedDate < currentTermsOfUseAgreedDate else {
-                    return .send(.delegate(.login))
+                    return .send(.delegate(.showLogin))
                 }
 
                 return .send(.delegate(.needsTermsOfUseAgreement(latestUpdateDate: currentTermsOfUseAgreedDate)))

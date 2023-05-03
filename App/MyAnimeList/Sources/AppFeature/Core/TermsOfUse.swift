@@ -15,7 +15,7 @@ public struct TermsOfUse: Reducer {
     
     public enum Action: Equatable {
         public enum Delegate: Equatable {
-            case login
+            case showLogin
         }
         case agreedButtonTapped
         case delegate(Delegate)
@@ -31,7 +31,7 @@ public struct TermsOfUse: Reducer {
             case .agreedButtonTapped:
                 logger.debug("agreedButtonTapped")
                 userDefaultsClient.setTermsOfUseAgreedDate(state.latestUpdateDate)
-                return .send(.delegate(.login))
+                return .send(.delegate(.showLogin))
 
             case .delegate:
                 logger.debug("delegate")

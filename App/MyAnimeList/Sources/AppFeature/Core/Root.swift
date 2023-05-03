@@ -45,8 +45,8 @@ public struct Root: Reducer {
                 state.phase = .termsOfUse(.init(latestUpdateDate: latestUpdateDate))
                 return .none
 
-            case .phase(.launch(.delegate(.login))),
-                 .phase(.termsOfUse(.delegate(.login))):
+            case .phase(.launch(.delegate(.showLogin))),
+                 .phase(.termsOfUse(.delegate(.showLogin))):
                 logger.debug("login")
                 state.phase = .authentication(.init())
                 return .none

@@ -8,7 +8,7 @@ import Dependencies
 public struct APIClient {
     public var fetchAppConfig: @Sendable () async throws -> Response<AppConfig>
     public var fetchAppInfo: @Sendable () async throws -> Response<AppInfo>
-    public var signIn: @Sendable (LoginRequest) async throws -> Response<User>
+    public var signIn: @Sendable (SignInRequest) async throws -> Response<User>
 }
 
 // MARK: DependencyValues
@@ -39,12 +39,12 @@ extension APIClient: TestDependencyKey {
         fetchAppInfo: {
             Response(result: .success(AppInfo(termsUpdatedAt: .distantFuture)), urlResponse: previewHTTPURLResponse)
         },
-        signIn: { loginRequest in
+        signIn: { signInRequest in
             Response(
                 result: .success(
                     User(
                         id: "id009",
-                        username: loginRequest.username,
+                        username: signInRequest.username,
                         firstName: "First",
                         lastName: "Last")
                 ),
@@ -93,12 +93,12 @@ extension APIClient {
             fetchAppInfo: {
                 return Response(result: .success(AppInfo(termsUpdatedAt: Date(timeIntervalSince1970: 0))), urlResponse: previewHTTPURLResponse)
             },
-            signIn: { loginRequest in
+            signIn: { signInRequest in
                 Response(
                     result: .success(
                         User(
                             id: "id009",
-                            username: loginRequest.username,
+                            username: signInRequest.username,
                             firstName: "First",
                             lastName: "Last")
                     ),

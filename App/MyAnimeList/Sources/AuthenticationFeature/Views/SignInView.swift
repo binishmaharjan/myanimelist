@@ -101,9 +101,7 @@ struct SignInView: View {
                         .foregroundColor(.primary.opacity(0.7))
                         .accentColor(.primary.opacity(0.7))
                         .onTapGesture {
-                            withAnimation {
-                                //TODO: show Sign up view
-                            }
+                            viewStore.send(.signUpTextTapped)
                         }
                 }
                 .slideFadeIn(show: animationOrder.form, offset: 20)

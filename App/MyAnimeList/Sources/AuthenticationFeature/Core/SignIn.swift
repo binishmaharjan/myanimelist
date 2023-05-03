@@ -2,6 +2,7 @@
 //  Created by Maharjan Binish on 2023/05/02.
 //
 
+import APIClient
 import ComposableArchitecture
 import Foundation
 import os.log
@@ -17,9 +18,11 @@ public struct SignIn: Reducer {
 
     public enum Action: BindableAction, Equatable {
         public enum Delegate: Equatable {
-            case signUp
+            case showSignUp
+            case signInUser(SignInRequest)
         }
         case signInButtonTapped
+        case signUpTextTapped
         case delegate(Delegate)
         case binding(BindingAction<State>)
     }
@@ -33,7 +36,12 @@ public struct SignIn: Reducer {
             switch action {
             case .signInButtonTapped:
                 logger.debug("signInButtonTapped")
-                return .send(.delegate(.signUp))
+                let request = SignInRequest(username: state.username, password: state.password)
+                return .send(.delegate(.signInUser(request)))
+
+            case .signUpTextTapped:
+                logger.debug("signUpTextTapped")
+                return .send(.delegate(.showSignUp))
 
             case .binding(\.$username): // TODO: Remove
                 let username = state.username

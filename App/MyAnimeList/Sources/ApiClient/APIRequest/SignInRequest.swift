@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct LoginRequest: Request {
+public struct SignInRequest: Request, Equatable {
     public typealias Success = User
 
     public init(username: String, password: String) {

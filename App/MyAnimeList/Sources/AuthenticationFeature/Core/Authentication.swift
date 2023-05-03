@@ -2,6 +2,7 @@
 //  Created by Maharjan Binish on 2023/05/03.
 //
 
+import APIClient
 import Foundation
 import ComposableArchitecture
 import os.log
@@ -23,8 +24,12 @@ public struct Authentication: Reducer {
     public var body: some Reducer<State, Action> {
         Reduce<State, Action> { state, action in
             switch action {
-            case .signIn(.delegate(.signUp)):
-                logger.debug("signUp")
+            case .signIn(.delegate(.showSignUp)):
+                logger.debug("showSignUp")
+                return .none
+
+            case .signIn(.delegate(.signInUser(let request))):
+                logger.debug("showSignUp: username: \(request.username)")
                 return .none
                 
             case .signIn:
