@@ -17,7 +17,7 @@ public struct Authentication: Reducer {
         public init() { }
         var signIn: SignIn.State = SignIn.State()
         var signUp: SignUp.State = SignUp.State()
-        var phase: Phase = .signUp
+        var phase: Phase = .signIn
     }
 
     public enum Action: Equatable{
