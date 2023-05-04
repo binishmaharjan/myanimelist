@@ -4,7 +4,7 @@
 
 import Foundation
 
-public struct User: JSONResponseValue {
+public struct User: JSONResponseValue, Equatable {
     public init(id: String, username: String, firstName: String, lastName: String) {
         self.id = id
         self.username = username

@@ -25,6 +25,7 @@ public struct Authentication: Reducer {
     public enum Action: BindableAction, Equatable {
         case signIn(SignIn.Action)
         case signUp(SignUp.Action)
+        case authenticateResponse(TaskResult<User>)
         case toggleLoading(Bool)
         case binding(BindingAction<State>)
     }
@@ -32,6 +33,7 @@ public struct Authentication: Reducer {
     public init(){ }
 
     @Dependency(\.continuousClock) private var clock
+    @Dependency(\.apiClient) private var apiClient
 
     private let logger = Logger(subsystem: "com.myanimelist", category: "Authentication")
 
@@ -46,12 +48,16 @@ public struct Authentication: Reducer {
                 return .none
 
             case .signIn(.delegate(.signInUser(let request))):
-                logger.debug("signInUser: username: \(request.username)")
+                logger.debug("signInUser")
                 state.isLoading = true
 
                 return .task {
-                    try await clock.sleep(for: .seconds(5))
-                    return .toggleLoading(false)
+                    try await clock.sleep(for: .seconds(2))
+                    return await .authenticateResponse(
+                        TaskResult {
+                            try await apiClient.signIn(request).value
+                        }
+                    )
                 }
 
             case .signUp(.delegate(.showSignIn)):
@@ -64,13 +70,30 @@ public struct Authentication: Reducer {
                 state.isLoading = true
 
                 return .task {
-                    try await clock.sleep(for: .seconds(5))
-                    return .toggleLoading(false)
+                    try await clock.sleep(for: .seconds(2))
+                    return await .authenticateResponse(
+                        TaskResult {
+                            try await apiClient.signUp(request).value
+                        }
+                    )
                 }
 
             case .toggleLoading(let isLoading):
                 logger.debug("toggleLoading \(isLoading)")
                 state.isLoading = isLoading
+
+                return .none
+
+            case .authenticateResponse(.success(let user)):
+                logger.debug("authenticateResponse: user \(user.id)")
+                state.isLoading = false
+
+                return .none
+
+
+            case .authenticateResponse(.failure):
+                logger.debug("authenticateResponse: failure")
+                state.isLoading = false
 
                 return .none
 
