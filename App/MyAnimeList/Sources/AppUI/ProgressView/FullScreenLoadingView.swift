@@ -5,8 +5,8 @@
 import SwiftUI
 
 // MARK: Modifier
-public extension View {
-    func fullScreenProgress(
+extension View {
+     public func fullScreenProgress(
         _ isInProgress: Bool,
         dimmedBackground: Bool = false,
         @ViewBuilder content: @escaping () -> some View = ProgressView.init
@@ -37,12 +37,13 @@ private struct FullScreenLoadingView<Content: View>: UIViewControllerRepresentab
         UIViewController()
     }
 
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+    func updateUIViewController(_ viewController: UIViewController, context: Context) {
         context.coordinator.rootView = content()
         context.coordinator.view.backgroundColor = dimmedBackground ? .black.withAlphaComponent(0.3) : .clear
 
-        uiViewController.view.window?.isUserInteractionEnabled = !isInProgress
-        if isInProgress, let window = uiViewController.view.window {
+//        viewController.view.window?.isUserInteractionEnabled = !isInProgress
+
+        if isInProgress, let window = viewController.view.window {
             window.addSubview(context.coordinator.view)
             context.coordinator.view.frame = window.bounds
         } else {

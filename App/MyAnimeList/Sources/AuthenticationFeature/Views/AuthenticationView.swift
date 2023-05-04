@@ -27,7 +27,7 @@ public struct AuthenticationView: View {
 
                 GeometryReader { proxy in
                     Group {
-                        switch viewStore.state.phase {
+                        switch viewStore.phase {
                         case .signIn:
                             SignInView(
                                 store: store.scope(
@@ -58,10 +58,8 @@ public struct AuthenticationView: View {
                             .accessibilityHidden(true)
                     )
                 }
-
-                LoadingView()
-                    .shadow(radius: 5)
             }
+            .fullScreenProgress(viewStore.state.isLoading)
         }
     }
 }

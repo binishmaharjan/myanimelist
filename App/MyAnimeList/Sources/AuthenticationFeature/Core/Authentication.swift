@@ -15,21 +15,29 @@ public struct Authentication: Reducer {
         }
 
         public init() { }
+
         var signIn: SignIn.State = SignIn.State()
         var signUp: SignUp.State = SignUp.State()
         var phase: Phase = .signIn
+        @BindingState var isLoading = false
     }
 
-    public enum Action: Equatable{
+    public enum Action: BindableAction, Equatable {
         case signIn(SignIn.Action)
         case signUp(SignUp.Action)
+        case toggleLoading(Bool)
+        case binding(BindingAction<State>)
     }
 
     public init(){ }
 
+    @Dependency(\.continuousClock) private var clock
+
     private let logger = Logger(subsystem: "com.myanimelist", category: "Authentication")
 
     public var body: some Reducer<State, Action> {
+        BindingReducer()
+
         Reduce<State, Action> { state, action in
             switch action {
             case .signIn(.delegate(.showSignUp)):
@@ -39,7 +47,12 @@ public struct Authentication: Reducer {
 
             case .signIn(.delegate(.signInUser(let request))):
                 logger.debug("signInUser: username: \(request.username)")
-                return .none
+                state.isLoading = true
+
+                return .task {
+                    try await clock.sleep(for: .seconds(5))
+                    return .toggleLoading(false)
+                }
 
             case .signUp(.delegate(.showSignIn)):
                 state.phase = .signIn
@@ -48,12 +61,20 @@ public struct Authentication: Reducer {
 
             case .signUp(.delegate(.signUpUser(let request))):
                 logger.debug("signUpUser")
-                return .none
-                
-            case .signIn:
+                state.isLoading = true
+
+                return .task {
+                    try await clock.sleep(for: .seconds(5))
+                    return .toggleLoading(false)
+                }
+
+            case .toggleLoading(let isLoading):
+                logger.debug("toggleLoading \(isLoading)")
+                state.isLoading = isLoading
+
                 return .none
 
-            case .signUp:
+            case .binding, .signIn, .signUp:
                 return .none
             }
         }

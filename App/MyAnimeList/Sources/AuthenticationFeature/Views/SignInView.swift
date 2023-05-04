@@ -122,6 +122,7 @@ struct SignInView: View {
             }
             .outlineOverlay(cornerRadius: 30)
             .onAppear {
+                isUsernameFocused = true
                 viewStore.send(.onAppear)
                 startInitialAnimations()
             }
