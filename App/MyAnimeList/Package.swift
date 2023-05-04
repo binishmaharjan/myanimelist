@@ -18,7 +18,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "prerelease/1.0"),
-        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", exact: "6.6.2")
+        .package(url: "https://github.com/SwiftGen/SwiftGenPlugin", exact: "6.6.2"),
+        .package(url: "https://github.com/airbnb/lottie-ios", exact: "4.2.0")
     ],
     targets: [
         .target(
@@ -41,7 +42,9 @@ let package = Package(
         ),
         .target(
             name: "AppUI",
-            dependencies: [],
+            dependencies: [
+                .product(name: "Lottie", package: "lottie-ios")
+            ],
             resources: [
                 .process("Resources"),
             ],

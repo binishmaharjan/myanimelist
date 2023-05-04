@@ -12,7 +12,6 @@ public struct AuthenticationView: View {
     }
 
     @State var appear = true
-    @State var viewState = CGSize.zero
     @State var appearBackground = true
 
     private var store: StoreOf<Authentication>
@@ -46,12 +45,8 @@ public struct AuthenticationView: View {
                             )
                         }
                     }
-                    .rotationEffect(.degrees(viewState.width / 40))
-                    //rotation3d
                     .shadow(color: .app(.shadow).opacity(0.2), radius: 30, x: 0, y: 0)
                     .padding(20)
-                    .offset(x: viewState.width, y: viewState.height) // height??
-                    // gesture
                     .frame(maxHeight: .infinity, alignment: .center)
                     .offset(y: appear ? 0 : proxy.size.height)
                     .background(
@@ -63,6 +58,9 @@ public struct AuthenticationView: View {
                             .accessibilityHidden(true)
                     )
                 }
+
+                LoadingView()
+                    .shadow(radius: 5)
             }
         }
     }
