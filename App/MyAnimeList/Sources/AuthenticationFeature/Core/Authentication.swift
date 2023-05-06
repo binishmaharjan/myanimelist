@@ -19,15 +19,14 @@ public struct Authentication: Reducer {
         var signIn: SignIn.State = SignIn.State()
         var signUp: SignUp.State = SignUp.State()
         var phase: Phase = .signIn
-        @BindingState var isLoading = false
+        var isLoading = false
     }
 
-    public enum Action: BindableAction, Equatable {
+    public enum Action: Equatable {
         case signIn(SignIn.Action)
         case signUp(SignUp.Action)
         case authenticateResponse(TaskResult<User>)
         case toggleLoading(Bool)
-        case binding(BindingAction<State>)
     }
 
     public init(){ }
@@ -38,8 +37,6 @@ public struct Authentication: Reducer {
     private let logger = Logger(subsystem: "com.myanimelist", category: "Authentication")
 
     public var body: some Reducer<State, Action> {
-        BindingReducer()
-
         Reduce<State, Action> { state, action in
             switch action {
             case .signIn(.delegate(.showSignUp)):
@@ -97,7 +94,7 @@ public struct Authentication: Reducer {
 
                 return .none
 
-            case .binding, .signIn, .signUp:
+            case .signIn, .signUp:
                 return .none
             }
         }
