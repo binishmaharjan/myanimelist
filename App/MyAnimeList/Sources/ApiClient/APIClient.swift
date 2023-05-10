@@ -32,7 +32,9 @@ extension APIClient: TestDependencyKey {
     /// Preview value for response
     private static let previewHTTPURLResponse = HTTPURLResponse(url: URL(string: "https://example.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
     /// Preview value for error
-    private static let previewErrorResponse = ResponseError.api(APIError(code: .notFound, contents: []))
+    private static let previewErrorResponse = ResponseError.api(
+        APIError(status: 404, code: .notFound, message: "Not Found")
+    )
     /// Preview value
     public static let previewValue = APIClient(
         fetchAppConfig: {
@@ -108,13 +110,25 @@ extension APIClient {
                 return Response(result: .success(AppInfo(termsUpdatedAt: Date(timeIntervalSince1970: 0))), urlResponse: previewHTTPURLResponse)
             },
             signIn: { signInRequest in
+//                Response(
+//                    result: .success(
+//                        User(
+//                            id: "id009",
+//                            username: signInRequest.username,
+//                            firstName: "First",
+//                            lastName: "Last")
+//                    ),
+//                    urlResponse: previewHTTPURLResponse
+//                )
                 Response(
-                    result: .success(
-                        User(
-                            id: "id009",
-                            username: signInRequest.username,
-                            firstName: "First",
-                            lastName: "Last")
+                    result: .failure(
+                        .api(
+                            APIError(
+                                status: 404,
+                                code: .notFound,
+                                message: "Not Found"
+                            )
+                        )
                     ),
                     urlResponse: previewHTTPURLResponse
                 )

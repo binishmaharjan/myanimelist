@@ -8,14 +8,15 @@ public struct AngularButton: View {
     @State private var tap = false
     @GestureState private var isDetectingLongPress = false
     @State private var completedLongPress = false
-    private var title: String
+    private var title: LocalizedStringKey
 
-    public init(title: String) {
+    public init(title: LocalizedStringKey) {
         self.title = title
     }
 
     public var body: some View {
         Text(completedLongPress ? "Loading..." : title)
+            .foregroundColor(.app(.primary))
             .fontWeight(.semibold)
             .frame(maxWidth: .infinity, maxHeight: 50)
             .background(

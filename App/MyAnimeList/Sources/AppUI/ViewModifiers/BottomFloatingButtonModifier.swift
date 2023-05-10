@@ -28,17 +28,21 @@ private struct BottomFloatingButtonModifier<Caption: View>: ViewModifier {
     }
 
     private var bottomButton: some View {
-        VStack(spacing: 24) {
-            Button(titleKey, action: action)
-                .buttonStyle(.primary)
-                .disabled(isDisabled)
-                caption
+        VStack(spacing: 18) {
+            Button(action: action) {
+                AngularButton(title: titleKey)
+            }
+            .disabled(isDisabled)
+
+            caption
         }
         .disabled(isDisabled)
-        .padding([.horizontal, .top], 16)
+        .padding([.horizontal, .top], 24)
         .padding(.bottom, 24)
         .background {
             Color(appColor: .white1)
+                .background(.ultraThinMaterial)
+                .backgroundColor(opacity: 0.4)
                 .ignoresSafeArea(edges: .bottom)
                 .shadow(color: .app(.shadow).opacity(0.05), radius: 6 / UITraitCollection.current.displayScale, x: 0, y: -4)
         }
@@ -94,7 +98,8 @@ struct BottomFloatingButtonModifier_Previews: PreviewProvider {
                     TextField("", text: .constant(""))
                 }
             }
-            .bottomFloatingButton("次へ") {
+            .tint(.app(.primary))
+            .bottomFloatingButton("Next") {
             } caption: {
                 if isCaptionPresented {
                     caption
@@ -113,7 +118,7 @@ struct BottomFloatingButtonModifier_Previews: PreviewProvider {
         }
 
         private var caption: some View {
-            Text("キャプション")
+            Text("Caption text")
                 .font(.app(.body2))
         }
     }

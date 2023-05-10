@@ -1,0 +1,57 @@
+//
+//  Created by Maharjan Binish on 2023/05/07.
+//
+
+import AppUI
+import SwiftUI
+
+struct NotFoundErrorView: View {
+    var message: String
+    var retryAction: () -> Void
+
+    var body: some View {
+        ZStack {
+            Color.clear
+                .background {
+                    Asset.Images.imgBlob1.swiftUIImage
+                        .offset(x: 170, y: -60)
+                        .blur(radius: 20)
+                        .accessibilityHidden(true)
+                }
+
+            VStack(spacing: 16) {
+                Image(systemName: "xmark.seal")
+                    .resizable()
+                    .frame(width: 75, height: 75)
+                    .foregroundColor(Color.app(.primary))
+
+                Text("Resource Not Found")
+                    .font(.app(.title))
+                    .foregroundColor(Color.app(.primary))
+
+                Text(verbatim: message)
+                    .multilineTextAlignment(.center)
+                    .font(.app(.body2))
+                    .foregroundColor(Color.app(.primary))
+                    .frame(width: 263)
+            }
+            .frame(maxHeight: .infinity)
+            .bottomFloatingButton("Close") {
+               retryAction()
+            }
+        }
+    }
+}
+
+struct NotFoundErrorView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            NotFoundErrorView(
+                message: "Please wait a while and try again.",
+                retryAction: { }
+            )
+            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+            .previewDisplayName("iPhone 8")
+        }
+    }
+}

@@ -3,35 +3,31 @@
 //
 
 import Foundation
+// {"status":404,"type":"HttpException","message":"Not Found","error":null}
 
 public struct APIError: Error, Hashable, Codable, JSONResponseValue {
-    public init(code: Code, contents: [Content]) {
+    public init(status: Int, code: Code, message: String, error: String? = nil) {
+        self.status = status
         self.code = code
-        self.contents = contents
+        self.message = message
+        self.error = error
     }
 
-    public struct Content: Hashable, Codable {
-        public init(name: String? = nil, message: String) {
-            self.name = name
-            self.message = message
-        }
-
-        public var name: String?
-        public var message: String
-    }
-
+    public var status: Int
     public var code: Code
-    public var contents: [Content]
+    public var message: String
+    public var error: String?
 
     public var isUnauthorized: Bool {
         [.invalidToken, .tokenExpired].contains(code)
     }
 
     private enum CodingKeys: String, CodingKey {
-        case code = "error_code"
-        case contents = "errors"
+        case status
+        case code = "type"
+        case message
+        case error
     }
-
     public static let keyDecodingStrategy = JSONDecoder.KeyDecodingStrategy.useDefaultKeys
 }
 
@@ -48,17 +44,17 @@ extension APIError {
 
 extension APIError.Code {
     /// undefined
-    public static let undefined = Self(rawValue: "undefined")
+    public static let undefined = APIError.Code(rawValue: "undefined")
     /// invalidToken
-    public static let invalidToken = Self(rawValue: "invalidToken")
+    public static let invalidToken = APIError.Code(rawValue: "invalidToken")
     /// tokenExpired
-    public static let tokenExpired = Self(rawValue: "tokenExpired")
-    /// notFound
-    public static let notFound = Self(rawValue: "notFound")
+    public static let tokenExpired = APIError.Code(rawValue: "tokenExpired")
+    /// notFound (actual error)
+    public static let notFound = APIError.Code(rawValue: "HttpException")
     /// serverError
-    public static let serverError = Self(rawValue: "serverError")
+    public static let serverError = APIError.Code(rawValue: "serverError")
     /// underMaintenance
-    public static let underMaintenance = Self(rawValue: "underMaintenance")
+    public static let underMaintenance = APIError.Code(rawValue: "underMaintenance")
 }
 
 extension APIError.Code: Codable {
