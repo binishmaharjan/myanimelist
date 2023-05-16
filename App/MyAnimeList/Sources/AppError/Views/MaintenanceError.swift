@@ -8,31 +8,21 @@ import AppUI
 struct MaintenanceView: View {
     var message: String
     var retryAction: () -> Void
-
+    
     var body: some View {
-        ZStack {
-            Color.clear
-                .background {
-                    Asset.Images.imgBlob1.swiftUIImage
-                        .offset(x: 170, y: -60)
-                        .blur(radius: 20)
-                        .accessibilityHidden(true)
-                }
-
-            VStack(spacing: 16) {
-                Text("Under maintenance")
-                    .font(.app(.title))
-                    .foregroundColor(.app(.primary))
-
-                Text(verbatim: message)
-                    .font(.app(.body2))
-                    .foregroundColor(.app(.primary))
-                    .frame(width: 263)
-            }
-            .frame(maxHeight: .infinity)
-            .bottomFloatingButton("Retry") {
-                retryAction()
-            }
+        VStack(spacing: 16) {
+            Text("Under maintenance")
+                .font(.app(.title))
+                .foregroundColor(.app(.primary))
+            
+            Text(verbatim: message)
+                .font(.app(.body2))
+                .foregroundColor(.app(.primary))
+                .frame(width: 263)
+        }
+        .frame(maxHeight: .infinity)
+        .bottomFloatingButton("Retry") {
+            retryAction()
         }
     }
 }

@@ -76,6 +76,7 @@ let package = Package(
             dependencies: [
                 "APIClient",
                 "AppUI",
+                "AppError",
                 "UserDefaultsClient",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]

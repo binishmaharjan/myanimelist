@@ -8,7 +8,7 @@ import APIClient
 
 private let logger = Logger(subsystem: "com.myanimelist", category: "AppError")
 
-public enum AppError: Error, Hashable {
+public enum AppError: Error, Hashable, Equatable {
     case api(APIError)
     case network(URLError)
     case general

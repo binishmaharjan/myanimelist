@@ -5,6 +5,7 @@
 import ComposableArchitecture
 import SwiftUI
 import AppUI
+import AppError
 
 public struct AuthenticationView: View {
     public init(store: StoreOf<Authentication>) {
@@ -60,6 +61,13 @@ public struct AuthenticationView: View {
                 }
             }
             .fullScreenProgress(viewStore.state.isLoading)
+            .fullScreenCover(
+                store: store.scope(state: \.$destination, action: Authentication.Action.destination),
+                state: /Authentication.Destination.State.appError,
+                action: Authentication.Destination.Action.appError
+            ) { store in
+                AppErrorView(store: store)
+            }
         }
     }
 }

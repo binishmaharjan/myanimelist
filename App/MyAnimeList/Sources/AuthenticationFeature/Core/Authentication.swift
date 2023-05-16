@@ -3,6 +3,7 @@
 //
 
 import APIClient
+import AppError
 import Foundation
 import ComposableArchitecture
 import os.log
@@ -20,6 +21,7 @@ public struct Authentication: Reducer {
         var signUp: SignUp.State = SignUp.State()
         var phase: Phase = .signIn
         var isLoading = false
+        @PresentationState var destination: Destination.State?
     }
 
     public enum Action: Equatable {
@@ -27,6 +29,7 @@ public struct Authentication: Reducer {
         case signUp(SignUp.Action)
         case authenticateResponse(TaskResult<User>)
         case toggleLoading(Bool)
+        case destination(PresentationAction<Destination.Action>)
     }
 
     public init(){ }
@@ -88,13 +91,24 @@ public struct Authentication: Reducer {
                 return .none
 
 
-            case .authenticateResponse(.failure):
+            case .authenticateResponse(.failure(let error)):
                 logger.debug("authenticateResponse: failure")
                 state.isLoading = false
 
+                let appErrorState = AppErrorState(AppError(error: error))!
+                state.destination = .appError(AppErrorReducer.State(appErrorState: appErrorState))
+
                 return .none
 
-            case .signIn, .signUp:
+            case .destination(.presented(.appError(.retry))):
+                state.destination = nil
+                return .none
+
+            case .destination(.presented(.appError(.cancel))):
+                state.destination = nil
+                return .none
+
+            case .signIn, .signUp, .destination:
                 return .none
             }
         }
@@ -105,6 +119,25 @@ public struct Authentication: Reducer {
 
         Scope(state: \.signUp, action: /Action.signUp) {
             SignUp()
+        }
+    }
+}
+
+// MARK: Destination
+extension Authentication {
+    public struct Destination: Reducer {
+        public enum State: Equatable {
+            case appError(AppErrorReducer.State)
+        }
+
+        public enum Action: Equatable {
+            case appError(AppErrorReducer.Action)
+        }
+
+        public var body: some ReducerOf<Self> {
+            Scope(state: /State.appError, action: /Action.appError) {
+                AppErrorReducer()
+            }
         }
     }
 }
