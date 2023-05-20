@@ -66,14 +66,6 @@ public struct AuthenticationView: View {
                 state: /Authentication.Destination.State.appError,
                 action: Authentication.Destination.Action.appError
             )
-//            .fullScreenCover(
-//                store: store.scope(state: \.$destination, action: Authentication.Action.destination),
-//                state: /Authentication.Destination.State.appError,
-//                action: Authentication.Destination.Action.appError
-//            ) { store in
-//                AppErrorView(store: store)
-//            }
-
         }
     }
 }
