@@ -54,30 +54,18 @@ extension Request {
     }
 }
 
-// MARK: - Authorizable Request
-public protocol AuthorizableRequest<Success>: Request {
-    var accessToken: String { get }
-}
-
-extension AuthorizableRequest {
-    public var headerFields: [String : String] {
-        ["Authorization": "Bearer \(accessToken)"]
-    }
-}
-
 // MARK: - URLRequest Factory
 
 extension Request {
     @usableFromInline
     func makeURLRequest(baseURL: URL) throws -> URLRequest {
         let baseURL = baseURL.appendingPathComponent(apiVersion.path)
-        // 後からURLComponents.pathに割り当てると、baseURLに含まれるパスが上書きされてしまうため、代わりにあらかじめpathも結合しておく。
+
         let url = path.isEmpty ? baseURL : baseURL.appendingPathComponent(path)
         guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             throw RequestError.invalidEndpoint(url)
         }
 
-        // `percentEncodedQueryItems`に空配列を設定するとURLの末尾に"?"のみ挿入されてしまうため、`queries.isEmpty == true`の場合は`nil`の状態をキープさせる。
         if let queryParameters, !queryParameters.isEmpty {
             urlComponents.percentEncodedQueryItems = queryParameters.percentEncodedURLQueryItems
         }

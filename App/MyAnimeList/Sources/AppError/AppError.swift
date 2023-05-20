@@ -54,9 +54,6 @@ extension AppError: LocalizedError {
 extension APIError: LocalizedError {
     public var errorDescription: String? {
         switch code {
-        case .invalidToken, .tokenExpired:
-            return "Invalid token"
-
         case .serverError:
             return "An error has occurred in the server. Please try again later"
 

@@ -43,11 +43,6 @@ public struct AppErrorState {
     public init?(
         _ value: AppError
     ) {
-        // if unauthorized error, then handle separately
-        if case .api(let apiError) = value, apiError.isUnauthorized {
-            return nil
-        }
-
         self.value = value
     }
 

@@ -18,10 +18,6 @@ public struct APIError: Error, Hashable, Codable, JSONResponseValue {
     public var message: String
     public var error: String?
 
-    public var isUnauthorized: Bool {
-        [.invalidToken, .tokenExpired].contains(code)
-    }
-
     private enum CodingKeys: String, CodingKey {
         case status
         case code = "type"
@@ -45,10 +41,6 @@ extension APIError {
 extension APIError.Code {
     /// undefined
     public static let undefined = APIError.Code(rawValue: "undefined")
-    /// invalidToken
-    public static let invalidToken = APIError.Code(rawValue: "invalidToken")
-    /// tokenExpired
-    public static let tokenExpired = APIError.Code(rawValue: "tokenExpired")
     /// notFound (actual error)
     public static let notFound = APIError.Code(rawValue: "HttpException")
     /// serverError

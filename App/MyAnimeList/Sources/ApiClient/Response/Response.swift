@@ -8,10 +8,6 @@ public struct Response<Value> {
     public init(result: Result<Value, ResponseError>, urlResponse: HTTPURLResponse) {
         self.result = result
         self.urlResponse = urlResponse
-
-        if case .failure(.api(let apiError)) = result, apiError.isUnauthorized {
-            NotificationCenter.default.post(name: .unauthorizedNotification, object: self)
-        }
     }
 
     public var result: Result<Value, ResponseError>
