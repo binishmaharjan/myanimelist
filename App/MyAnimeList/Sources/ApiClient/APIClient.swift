@@ -125,7 +125,7 @@ extension APIClient {
                         .api(
                             APIError(
                                 status: 404,
-                                code: .underMaintenance,
+                                code: .notFound,
                                 message: "Not Found"
                             )
                         )

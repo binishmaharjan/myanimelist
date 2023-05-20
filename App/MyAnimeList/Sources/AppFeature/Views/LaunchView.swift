@@ -14,22 +14,18 @@ struct LaunchView: View {
 
     var body: some View {
         WithViewStore(store, observe: ViewState.init) { viewStore in
-            ZStack {
-                Asset.Images.imgMalLogo.swiftUIImage
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .ignoresSafeArea()
-            .background(Color.app(.primary))
-            .onAppear {
-                viewStore.send(.onAppear)
-            }
-            .alert(
-                store: self.store.scope(
-                    state: \.$destination, action: Launch.Action.destination
-                ),
-                state: /Launch.Destination.State.alert,
-                action: Launch.Destination.Action.alert
-            )
+            Asset.Images.imgMalLogo.swiftUIImage
+                .ignoresSafeArea()
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
+                .alert(
+                    store: self.store.scope(
+                        state: \.$destination, action: Launch.Action.destination
+                    ),
+                    state: /Launch.Destination.State.alert,
+                    action: Launch.Destination.Action.alert
+                )
         }
     }
 }
