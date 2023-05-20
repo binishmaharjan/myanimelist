@@ -3,171 +3,149 @@
 //
 
 import SwiftUI
-
-//public extension View {
-//    func appError(_ appErrorState: Binding<AppErrorState?>) -> some View {
-//        modifier(AppErrorModifier(appErrorState: appErrorState))
-//    }
-//}
-//
-//private struct AppErrorModifier: ViewModifier {
-//    @Binding var appErrorState: AppErrorState?
-//
-//    func body(content: Content) -> some View {
-//        content
-//            .fullScreenCover(
-//                isPresented: $appErrorState.isFullScreenPresented,
-//                onDismiss: appErrorState?.dismissalAction
-//            ) {
-//                fullScreenContent
-//                    .onDisappear {
-//                        // `appErrorState`プロパティが更新されアラート表示に切り替える際に必要になる処理。
-//                        // フルスクリーン表示が閉じられてから`appErrorState`を更新しないとアラートが表示されなくなる。
-//                        // (フルスクリーンを閉じるアニメーションの途中にアラートを表示しようと試みてうまく表示されないのかもしれない)
-//                        // 一旦`nil`を設定し、次のランループで元々の更新内容を再度設定する。
-//                        DispatchQueue.main.async {
-//                            self.appErrorState = appErrorState
-//                        }
-//                        appErrorState = nil
-//                    }
-//            }
-//            .alert(
-//                isPresented: $appErrorState.isAlertPresented,
-//                error: appErrorState?.value
-//            ) { [appErrorState] appError in
-//                switch appError {
-//                case .api:
-//                    Button(appErrorState?.singleDismissalLabel ?? "", role: .cancel) {
-//                        appErrorState?.dismissalAction()
-//                    }
-//                case .network, .general:
-//                    Button("Retry") {
-//                        appErrorState?.retryAction()
-//                    }
-//                    Button("Cancel") {
-//                        appErrorState?.dismissalAction()
-//                    }
-//                case .localSystem:
-//                    Button(appErrorState?.singleDismissalLabel ?? "") {
-//                        appErrorState?.dismissalAction()
-//                    }
-//                }
-//            } message: { appError in
-//                Text(appError.recoverySuggestion ?? "")
-//            }
-//    }
-//
-//    @ViewBuilder private var fullScreenContent: some View {
-//        if case .api(let apiError) = appErrorState?.value {
-//            if apiError.code == .serverError {
-//                ServerErrorView(
-//                    message: appErrorState?.value.errorDescription ?? "",
-//                    retryAction: appErrorState?.retryAction ?? {}
-//                )
-//            } else if apiError.code == .notFound {
-//                NotFoundErrorView(
-//                    message: appErrorState?.value.errorDescription ?? "",
-//                    retryAction: appErrorState?.retryAction ?? {}
-//                )
-//            } else if apiError.code == .underMaintenance {
-//                MaintenanceView(
-//                    message: appErrorState?.value.errorDescription ?? "",
-//                    retryAction: appErrorState?.retryAction ?? {}
-//                )
-//            }
-//        }
-//    }
-//}
-//
-//extension Binding where Value == AppErrorState? {
-//    var isFullScreenPresented: Binding<Bool> {
-//        Binding<Bool>(
-//            get: {
-//                if let wrappedValue {
-//                    return wrappedValue.isFullScreenError
-//                }
-//                return false
-//            },
-//            set: { isPresented, transaction in
-//                // もし`nil`を設定してしまうと、アラートが表示されなくなってしまう。
-//                // 反対に、アラートからフルスクリーンのエラー表示をする場合は、上記のような考慮をしなくても正しく表示される。
-//                // (非表示になる際のアニメーションの長さが関係している？)
-//                guard !isPresented else {
-//                    return
-//                }
-//                if let wrappedValue, wrappedValue.isFullScreenError {
-//                    self.transaction(transaction).wrappedValue = nil
-//                }
-//            }
-//        )
-//    }
-//
-//    var isAlertPresented: Binding<Bool> {
-//        Binding<Bool>(
-//            get: {
-//                if let wrappedValue {
-//                    return !wrappedValue.isFullScreenError
-//                }
-//                return false
-//            },
-//            set: { isPresented, transaction in
-//                if !isPresented {
-//                    self.transaction(transaction).wrappedValue = nil
-//                }
-//            }
-//        )
-//    }
-//}
-//
-//
-//struct AppErrorModifier_Previews: PreviewProvider {
-//    private struct Preview: View {
-//        @State private var appErrorState: AppErrorState?
-//
-//        var body: some View {
-//            VStack(spacing: 16) {
-//                Text("appError: \((appErrorState?.value).debugDescription)")
-//
-//                Group {
-//                    Button("General Error") {
-//                        appErrorState = AppErrorState(.general) { /* Finished */ }
-//                    }
-//
-//                    Button("Server Error") {
-//                        appErrorState = AppErrorState(
-//                            .api(.init(status: 404, code: .serverError, message: "Error"))
-//                        ) {
-//                            appErrorState = nil
-//                        }
-//                    }
-//
-//                    Button("Maintenance Error") {
-//                        appErrorState = AppErrorState(
-//                            .api(.init(status: 404, code: .underMaintenance, message: "Error"))
-//                        ) {
-//                            appErrorState = nil
-//                        }
-//                    }
-//
-//                    Button("Not Found Error") {
-//                        appErrorState = AppErrorState(
-//                            .api(.init(status: 404, code: .notFound, message: "Error"))
-//                        ) {
-//                            appErrorState = nil
-//                        }
-//                    }
-//                }
-//                .appError($appErrorState)
-//            }
-//        }
-//    }
-//
-//    static var previews: some View {
-//        Preview()
-//    }
-//}
-
 import ComposableArchitecture
+
+extension View {
+    public func appError<State: Equatable, Action: Equatable>(
+        store: Store<PresentationState<State>, PresentationAction<Action>>,
+        state toDestinationState: @escaping (State) -> AppErrorReducer.State?,
+        action fromDestinationAction: @escaping (AppErrorReducer.Action) -> Action
+    ) -> some View {
+        self.modifier(
+            AppErrorModifier(
+                viewStore: ViewStore(store, observe:  { $0 }),
+                toDestinationState: toDestinationState,
+                fromDestinationAction: fromDestinationAction)
+        )
+    }
+}
+
+private struct AppErrorModifier<State, Action>: ViewModifier {
+    @StateObject var viewStore: ViewStore<PresentationState<State>, PresentationAction<Action>>
+    let toDestinationState: (State) -> AppErrorReducer.State?
+    let fromDestinationAction: (AppErrorReducer.Action) -> Action
+
+    func body(content: Content) -> some View {
+        let alertState = self.viewStore.wrappedValue.flatMap(self.toDestinationState)
+        return content
+            .alert(
+               Text("Error"),
+               isPresented: Binding(
+                get: {
+                    guard let appErrorReducerState = self.viewStore.wrappedValue.flatMap(self.toDestinationState) else {
+                        return false
+                    }
+                    return appErrorReducerState.appErrorState.isAlertError
+                },
+                set: { newState in
+                    if !newState, self.viewStore.wrappedValue != nil {
+                      self.viewStore.send(.dismiss)
+                    }
+                  }
+               ),
+               presenting: alertState,
+               actions: { appErrorReducerState in
+                   if appErrorReducerState.appErrorState.isUndefined {
+                       Button {
+                           self.viewStore.send(.presented(self.fromDestinationAction(.retry)))
+                       } label: {
+                           Text("Retry")
+                       }
+                   }
+
+                   Button {
+                       self.viewStore.send(.presented(self.fromDestinationAction(.cancel)))
+                   } label: {
+                       Text("Cancel")
+                   }
+               },
+               message: { appErrorState in
+                   appErrorState.appErrorState.value.errorDescription.map(Text.init)
+               }
+            )
+    }
+}
+//private struct PresentationAlertModifier<State, Action, ButtonAction>: ViewModifier {
+//  @StateObject var viewStore: ViewStore<PresentationState<State>, PresentationAction<Action>>
+//  let toDestinationState: (State) -> AlertState<ButtonAction>?
+//  let fromDestinationAction: (ButtonAction) -> Action
+//
+//  func body(content: Content) -> some View {
+//    let id = self.viewStore.id
+//    let alertState = self.viewStore.wrappedValue.flatMap(self.toDestinationState)
+//    content.alert(
+//      (alertState?.title).map(Text.init) ?? Text(""),
+//      isPresented: Binding( // TODO: do proper binding
+//        get: { self.viewStore.wrappedValue.flatMap(self.toDestinationState) != nil },
+//        set: { newState in
+//          if !newState, self.viewStore.wrappedValue != nil, self.viewStore.id == id {
+//            self.viewStore.send(.dismiss)
+//          }
+//        }
+//      ),
+//      presenting: alertState,
+//      actions: { alertState in
+//        ForEach(alertState.buttons) { button in
+//          Button(role: button.role.map(ButtonRole.init)) {
+//            switch button.action.type {
+//            case let .send(action):
+//              if let action = action {
+//                self.viewStore.send(.presented(self.fromDestinationAction(action)))
+//              }
+//            case let .animatedSend(action, animation):
+//              if let action = action {
+//                _ = withAnimation(animation) {
+//                  self.viewStore.send(.presented(self.fromDestinationAction(action)))
+//                }
+//              }
+//            }
+//          } label: {
+//            Text(button.label)
+//          }
+//        }
+//      },
+//      message: {
+//        $0.message.map(Text.init) ?? Text("")
+//      }
+//    )
+//  }
+//}
+extension Binding where Value == AppErrorState? {
+    var isFullScreenPresented: Binding<Bool> {
+        .init(
+            get: {
+                if let wrappedValue {
+                    return wrappedValue.isFullScreenError
+                }
+                return false
+            },
+            set: { isPresented, transaction in
+                guard !isPresented else {
+                    return
+                }
+                if let wrappedValue, wrappedValue.isFullScreenError {
+                    self.transaction(transaction).wrappedValue = nil
+                }
+            }
+        )
+    }
+
+    var isAlertPresented: Binding<Bool> {
+        .init(
+            get: {
+                if let wrappedValue {
+                    return !wrappedValue.isFullScreenError
+                }
+                return false
+            },
+            set: { isPresented, transaction in
+                if !isPresented {
+                    self.transaction(transaction).wrappedValue = nil
+                }
+            }
+        )
+    }
+}
 
 // MARK: App Error + Composable Architecture
 public struct AppErrorReducer: Reducer {
