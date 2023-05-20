@@ -5,9 +5,11 @@
 import SwiftUI
 
 public struct AngularButton: View {
-    @State private var tap = false
+    @Environment(\.isEnabled) private var isEnabled
     @GestureState private var isDetectingLongPress = false
+    @State private var tap = false
     @State private var completedLongPress = false
+
     private var title: LocalizedStringKey
 
     public init(title: LocalizedStringKey) {
@@ -16,6 +18,7 @@ public struct AngularButton: View {
 
     public var body: some View {
         Text(completedLongPress ? "Loading..." : title)
+            .opacity(isEnabled ? 1.0 : 0.5)
             .foregroundColor(.app(.primary))
             .fontWeight(.semibold)
             .frame(maxWidth: .infinity, maxHeight: 50)
@@ -26,6 +29,7 @@ public struct AngularButton: View {
                         .cornerRadius(20)
                         .blendMode(.softLight)
                 }
+                    .opacity(isEnabled ? 1.0 : 0.7)
             )
             .frame(height: 50)
             .accentColor(.primary.opacity(0.7))
