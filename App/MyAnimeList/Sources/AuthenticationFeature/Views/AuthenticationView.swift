@@ -61,13 +61,11 @@ public struct AuthenticationView: View {
                 }
             }
             .fullScreenProgress(viewStore.state.isLoading)
-            .fullScreenCover(
+            .appError(
                 store: store.scope(state: \.$destination, action: Authentication.Action.destination),
                 state: /Authentication.Destination.State.appError,
                 action: Authentication.Destination.Action.appError
-            ) { store in
-                AppErrorView(store: store)
-            }
+            )
         }
     }
 }

@@ -101,10 +101,12 @@ public struct Authentication: Reducer {
                 return .none
 
             case .destination(.presented(.appError(.retry))):
+                print("Retry")
                 state.destination = nil
                 return .none
 
             case .destination(.presented(.appError(.cancel))):
+                print("Cancel")
                 state.destination = nil
                 return .none
 
