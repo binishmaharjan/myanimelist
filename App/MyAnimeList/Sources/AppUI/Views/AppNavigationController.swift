@@ -25,9 +25,9 @@ open class AppNavigationController: UINavigationController {
         super.viewDidLoad()
         let barAppearance = UINavigationBarAppearance()
         barAppearance.configureWithOpaqueBackground()
-        barAppearance.titleTextAttributes[.foregroundColor] = UIColor(appColor: .white1)
-        barAppearance.backgroundColor = .app(.primary)
-        barAppearance.shadowColor = .clear
+        barAppearance.titleTextAttributes[.foregroundColor] = UIColor(appColor: .primary)
+        barAppearance.backgroundColor = .app(.white1)
+//        barAppearance.shadowColor = .clear
         navigationBar.standardAppearance = barAppearance
         navigationBar.scrollEdgeAppearance = barAppearance
         navigationBar.tintColor = .app(.white1)

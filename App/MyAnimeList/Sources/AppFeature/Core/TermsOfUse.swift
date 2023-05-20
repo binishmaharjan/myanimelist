@@ -8,8 +8,7 @@ import os.log
 
 public struct TermsOfUse: Reducer {
     public struct State: Equatable {
-        //        var url = URL(string: "https://myanimelist.net/static/apiagreement.html")!
-        var url = URL(string: "https://example.com")!
+        var url = URL(string: "https://myanimelist.net/static/apiagreement.html")!
         var latestUpdateDate: Date
     }
     

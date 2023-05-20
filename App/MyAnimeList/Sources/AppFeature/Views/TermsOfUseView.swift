@@ -26,7 +26,7 @@ struct AgreementViewRepresentable: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> AppNavigationController {
         let agreementView = AgreementView(url: url, agreementAction: agreementAction)
-            .navigationTitle("利用規約")
+            .navigationTitle("Terms of Use")
         return AppNavigationController(rootViewController: UIHostingController(rootView: agreementView))
     }
 
@@ -54,7 +54,7 @@ private struct AgreementView: View {
         }
         .navigationTitle(titleKey)
         .navigationBarBackButtonHidden(isBackButtonHidden)
-        .bottomFloatingButton("同意", disabled: !isAgreementButtonEnabled, action: agreementAction)
+        .bottomFloatingButton("Agree", disabled: !isAgreementButtonEnabled, action: agreementAction)
     }
 
     func navigationTitle(_ titleKey: LocalizedStringKey) -> Self {
