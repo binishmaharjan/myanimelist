@@ -2,10 +2,10 @@
 //  Created by Maharjan Binish on 2023/04/27.
 //
 
-import AppKit
+import MyAnimeList
 import SwiftUI
 
 @main
-struct DevelopmentApp: AppKit.App {
+struct DevelopmentApp: MyAnimeList.App {
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
 }

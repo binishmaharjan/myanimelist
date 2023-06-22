@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [.iOS(.v16)],
     products: [
-        .library(name: "AppKit", targets: ["AppKit"]),
+        .library(name: "MyAnimeList", targets: ["MyAnimeList"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "APIClient", targets: ["APIClient"]),
@@ -24,7 +24,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AppKit",
+            name: "MyAnimeList",
             dependencies: [
                 "AppFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -90,7 +90,7 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "AppKitTests",
-            dependencies: ["AppKit"]),
+            name: "MyAnimeListTests",
+            dependencies: ["MyAnimeList"]),
     ]
 )
