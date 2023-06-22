@@ -142,14 +142,12 @@ struct SignInView: View {
     }
 }
 
-struct SignInView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignInView(
-            store: .init(
-                initialState: .init(),
-                reducer: SignIn()
-            )
+#Preview {
+    SignInView(
+        store: .init(
+            initialState: .init(),
+            reducer: SignIn()
         )
-    }
+    )
 }
 

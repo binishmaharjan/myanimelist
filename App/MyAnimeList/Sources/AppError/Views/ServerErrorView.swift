@@ -33,20 +33,18 @@ struct ServerErrorView: View {
     }
 }
 
-struct ErrorView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            ServerErrorView(
-                message: "Please wait a while and try again.",
-                retryAction: { }
-            )
-            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-            .previewDisplayName("iPhone 8")
-            
-            ServerErrorView(
-                message: "Please wait a while and try again.",
-                retryAction: {}
-            )
-        }
-    }
+#Preview {
+    ServerErrorView(
+        message: "Please wait a while and try again.",
+        retryAction: { }
+    )
+    .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+    .previewDisplayName("iPhone 8")
+}
+
+#Preview {
+    ServerErrorView(
+        message: "Please wait a while and try again.",
+        retryAction: {}
+    )
 }

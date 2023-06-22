@@ -53,13 +53,6 @@ public struct RootView: View {
     }
 }
 
-struct RootView_Previews: PreviewProvider {
-    static let store: StoreOf<Root> = .init(initialState: .init(), reducer: Root())
-    static var previews: some View {
-        Group {
-            RootView(store: store)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
-                .previewDisplayName("iPhone 14")
-        }
-    }
+#Preview {
+    RootView(store: .init(initialState: .init(), reducer: Root()))
 }

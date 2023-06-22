@@ -71,56 +71,63 @@ extension View {
     }
 }
 
-struct BottomFloatingButtonModifier_Previews: PreviewProvider {
-    static var previews: some View {
-        ForEach(["iPhone 13", "iPhone 8"], id: \.self) { deviceName in
-            NavigationView {
-                Content()
-                    .navigationTitle("BottomFloatingButton")
-                    .navigationBarTitleDisplayMode(.inline)
-            }
-            .previewDevice(.init(rawValue: deviceName))
-            .previewDisplayName(deviceName)
-        }
-    }
+// MARK: Preview
+private struct BottomFloatingButtonPreview: View {
+    @State private var isScrollView = true
+    @State private var isCaptionPresented = false
 
-    private struct Content: View {
-        @State private var isScrollView = true
-        @State private var isCaptionPresented = false
-
-        var body: some View {
-            VStack {
-                Toggle("ScrollView", isOn: $isScrollView)
-                Toggle("Caption", isOn: $isCaptionPresented)
-                if isScrollView {
-                    scrollView
-                } else {
-                    TextField("", text: .constant(""))
-                }
-            }
-            .tint(.app(.primary))
-            .bottomFloatingButton("Next") {
-            } caption: {
-                if isCaptionPresented {
-                    caption
-                }
-            }
-        }
-
-        private var scrollView: some View {
-            ScrollView {
+    var body: some View {
+        VStack {
+            Toggle("ScrollView", isOn: $isScrollView)
+            Toggle("Caption", isOn: $isCaptionPresented)
+            if isScrollView {
+                scrollView
+            } else {
                 TextField("", text: .constant(""))
-                ForEach(0..<100) { _ in
-                    Text("Hello, world!")
-                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-
-        private var caption: some View {
-            Text("Caption text")
-                .font(.app(.body2))
+        .tint(.app(.primary))
+        .bottomFloatingButton("Next") {
+        } caption: {
+            if isCaptionPresented {
+                caption
+            }
         }
     }
+
+    private var scrollView: some View {
+        ScrollView {
+            TextField("", text: .constant(""))
+            ForEach(0..<100) { _ in
+                Text("Hello, world!")
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var caption: some View {
+        Text("Caption text")
+            .font(.app(.body2))
+    }
+}
+
+#Preview {
+    NavigationView {
+        BottomFloatingButtonPreview()
+            .navigationTitle("BottomFloatingButton")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+    .previewDevice(.init(rawValue: "iPhone 13"))
+    .previewDisplayName("iPhone 13")
+}
+
+#Preview {
+    NavigationView {
+        BottomFloatingButtonPreview()
+            .navigationTitle("BottomFloatingButton")
+            .navigationBarTitleDisplayMode(.inline)
+    }
+    .previewDevice(.init(rawValue: "iPhone 8"))
+    .previewDisplayName("iPhone 8")
 }
 

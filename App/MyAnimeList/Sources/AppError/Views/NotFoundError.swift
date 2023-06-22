@@ -33,15 +33,11 @@ struct NotFoundErrorView: View {
     }
 }
 
-struct NotFoundErrorView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            NotFoundErrorView(
-                message: "Please wait a while and try again.",
-                retryAction: { }
-            )
-            .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-            .previewDisplayName("iPhone 8")
-        }
-    }
+#Preview {
+    NotFoundErrorView(
+        message: "Please wait a while and try again.",
+        retryAction: { }
+    )
+    .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+    .previewDisplayName("iPhone 8")
 }

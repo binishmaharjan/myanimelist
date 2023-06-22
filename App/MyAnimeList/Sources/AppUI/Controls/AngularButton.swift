@@ -52,8 +52,6 @@ public struct AngularButton: View {
     }
 }
 
-struct AngularButton_Previews: PreviewProvider {
-    static var previews: some View {
-        AngularButton(title: "Button")
-    }
+#Preview {
+    AngularButton(title: "Button")
 }

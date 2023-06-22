@@ -30,22 +30,17 @@ struct LaunchView: View {
     }
 }
 
-internal struct LaunchView_Previews: PreviewProvider {
-    static let store: StoreOf<Launch> = .init(initialState: .init(), reducer: Launch())
-    static var previews: some View {
-        Group {
-            LaunchView(store: store)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
-                .previewDisplayName("iPhone 14")
+#Preview {
+    let store: StoreOf<Launch> = .init(initialState: .init(), reducer: Launch())
+    return LaunchView(store: store)
+        .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+        .previewDisplayName("iPhone 14")
+}
 
-            LaunchView(store: store)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 14 Pro Max"))
-                .previewDisplayName("iPhone 14 Pro Max")
-                .preferredColorScheme(.dark)
-
-            LaunchView(store: store)
-                .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-                .previewDisplayName("iPhone 8")
-        }
-    }
+#Preview {
+    let store: StoreOf<Launch> = .init(initialState: .init(), reducer: Launch())
+    return LaunchView(store: store)
+        .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+        .preferredColorScheme(.dark)
+        .previewDisplayName("iPhone 14 Dark")
 }
