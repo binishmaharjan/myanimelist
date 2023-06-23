@@ -1,0 +1,36 @@
+{
+  "configurations" : [
+    {
+      "id" : "06287747-AFA1-447D-B87A-94BCDDFD8715",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Development.xcodeproj",
+      "identifier" : "64D4A11A29FA9C9D007A15F9",
+      "name" : "Development"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/MyAnimeList",
+        "identifier" : "MyAnimeListTests",
+        "name" : "MyAnimeListTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/MyAnimeList",
+        "identifier" : "AppFeatureTests",
+        "name" : "AppFeatureTests"
+      }
+    }
+  ],
+  "version" : 1
+}
