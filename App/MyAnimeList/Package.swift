@@ -91,6 +91,11 @@ let package = Package(
         ),
         .testTarget(
             name: "MyAnimeListTests",
-            dependencies: ["MyAnimeList"]),
+            dependencies: ["MyAnimeList"]
+        ),
+        .testTarget(
+            name: "AppFeatureTests",
+            dependencies: ["AppFeature"]
+        )
     ]
 )
