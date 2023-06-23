@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "C142D0E5-B006-47C7-9E43-ACB980872733",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MyAnimeListTests",
+        "name" : "MyAnimeListTests"
+      }
+    }
+  ],
+  "version" : 1
+}

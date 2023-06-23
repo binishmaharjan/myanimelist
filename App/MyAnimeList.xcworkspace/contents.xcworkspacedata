@@ -10,4 +10,7 @@
    <FileRef
       location = "group:MyAnimeList/Tests/AppFeatureTests/AppFeature.xctestplan">
    </FileRef>
+   <FileRef
+      location = "group:MyAnimeList/Tests/MyAnimeListTests/MyAnimeList.xctestplan">
+   </FileRef>
 </Workspace>
