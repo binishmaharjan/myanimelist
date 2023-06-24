@@ -172,7 +172,7 @@ public struct Launch: Reducer {
 
 // MARK: Alerts
 extension AlertState where Action == Launch.Action.Alert {
-    fileprivate static func appVersionErrorAlert() -> AlertState {
+    public static func appVersionErrorAlert() -> AlertState {
         AlertState {
             TextState("Error")
         } actions: {
@@ -184,7 +184,7 @@ extension AlertState where Action == Launch.Action.Alert {
         }
     }
 
-    fileprivate static func appInfoErrorAlert() -> AlertState {
+    public static func appInfoErrorAlert() -> AlertState {
         AlertState {
             TextState("Error")
         } actions: {
@@ -196,7 +196,7 @@ extension AlertState where Action == Launch.Action.Alert {
         }
     }
 
-    fileprivate static func forceUpdateAlert() -> AlertState {
+    public static func forceUpdateAlert() -> AlertState {
         AlertState {
             TextState("Force Update")
         } actions: {

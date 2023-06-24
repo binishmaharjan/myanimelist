@@ -67,37 +67,36 @@ private struct FullScreenLoadingView<Content: View>: UIViewControllerRepresentab
     }
 }
 
-struct FullScreenLoadingView_Previews: PreviewProvider {
-    private struct Preview: View {
-        @State private var isInProgress = false
-        @State private var dimmedBackground = true
-        var body: some View {
-            VStack {
-                Toggle("In Progress", isOn: $isInProgress)
-                Toggle("Dimmed Background", isOn: $dimmedBackground)
+// MARK: Preview
+private struct FullScreenLoadingViewPreview: View {
+    @State private var isInProgress = false
+    @State private var dimmedBackground = true
+    var body: some View {
+        VStack {
+            Toggle("In Progress", isOn: $isInProgress)
+            Toggle("Dimmed Background", isOn: $dimmedBackground)
+        }
+        .padding(32)
+        .onChange(of: isInProgress) { _ in
+            guard isInProgress else {
+                return
             }
-            .padding(32)
-            .onChange(of: isInProgress) { _ in
-                guard isInProgress else {
-                    return
-                }
-                Task {
-                    try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 3)
-                    isInProgress = false
-                }
+            Task {
+                try? await Task.sleep(nanoseconds: NSEC_PER_SEC * 3)
+                isInProgress = false
             }
-            .tint(Color.app(.primary))
-            .fullScreenProgress(isInProgress, dimmedBackground: dimmedBackground) {
-                ProgressView {
-                    if dimmedBackground {
-                        Text("Loading")
-                    }
+        }
+        .tint(Color.app(.primary))
+        .fullScreenProgress(isInProgress, dimmedBackground: dimmedBackground) {
+            ProgressView {
+                if dimmedBackground {
+                    Text("Loading")
                 }
             }
         }
     }
+}
 
-    static var previews: some View {
-        Preview()
-    }
+#Preview {
+    FullScreenLoadingViewPreview()
 }

@@ -95,9 +95,7 @@ public struct WebView: UIViewControllerRepresentable {
     }
 }
 
-struct WebView_Previews: PreviewProvider {
-    static var previews: some View {
-        WebView(url: URL(string: "https://www.example.com")!)
-            .bottomFloatingButton("Agree", action: {})
-    }
+#Preview {
+    WebView(url: URL(string: "https://www.example.com")!)
+        .bottomFloatingButton("Agree", action: {})
 }

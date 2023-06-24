@@ -52,23 +52,21 @@ open class AppNavigationController: UINavigationController {
 
 import SwiftUI
 
-struct AppNavigationController_Previews: PreviewProvider {
-    private struct AppNavigationView: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            let rootViewController = UIViewController()
-            rootViewController.title = "Root"
-            let navController = AppNavigationController(rootViewController: rootViewController)
-            let viewController = UIViewController()
-            viewController.title = "ViewController"
-            navController.pushViewController(viewController, animated: false)
-            return navController
-        }
-        func updateUIViewController(_ uiViewController: some UIViewController, context: Context) {
-        }
+private struct AppNavigationViewPreview: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> some UIViewController {
+        let rootViewController = UIViewController()
+        rootViewController.title = "Root"
+        let navController = AppNavigationController(rootViewController: rootViewController)
+        let viewController = UIViewController()
+        viewController.title = "ViewController"
+        navController.pushViewController(viewController, animated: false)
+        return navController
     }
+    func updateUIViewController(_ uiViewController: some UIViewController, context: Context) {
+    }
+}
 
-    static var previews: some View {
-        AppNavigationView()
-            .ignoresSafeArea()
-    }
+#Preview {
+    AppNavigationViewPreview()
+        .ignoresSafeArea()
 }

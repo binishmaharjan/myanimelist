@@ -143,13 +143,11 @@ public struct SignUpView: View {
     }
 }
 
-struct SignUpView_Previews: PreviewProvider {
-    static var previews: some View {
-        SignUpView(
-            store: .init(
-                initialState: .init(),
-                reducer: SignUp()
-            )
+#Preview {
+    SignUpView(
+        store: .init(
+            initialState: .init(),
+            reducer: SignUp()
         )
-    }
+    )
 }

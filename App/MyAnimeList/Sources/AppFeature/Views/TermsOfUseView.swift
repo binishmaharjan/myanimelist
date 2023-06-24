@@ -65,13 +65,12 @@ private struct AgreementView: View {
 }
 
 // MARK: Preview
-public struct TermsOfUseView_Previews: PreviewProvider {
-    public static var previews: some View {
-        TermsOfUseView(
-            store: .init(
-                initialState: .init(latestUpdateDate: .distantPast),
-                reducer: TermsOfUse()
-            )
+
+#Preview {
+    TermsOfUseView(
+        store: .init(
+            initialState: .init(latestUpdateDate: .distantPast),
+            reducer: TermsOfUse()
         )
-    }
+    )
 }

@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,9 +6,9 @@ import PackageDescription
 let package = Package(
     name: "MyAnimeList",
     defaultLocalization: "en",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v17)],
     products: [
-        .library(name: "AppKit", targets: ["AppKit"]),
+        .library(name: "MyAnimeList", targets: ["MyAnimeList"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),
         .library(name: "AppUI", targets: ["AppUI"]),
         .library(name: "APIClient", targets: ["APIClient"]),
@@ -24,7 +24,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AppKit",
+            name: "MyAnimeList",
             dependencies: [
                 "AppFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -90,7 +90,16 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "AppKitTests",
-            dependencies: ["AppKit"]),
+            name: "MyAnimeListTests",
+            dependencies: ["MyAnimeList"]
+        ),
+        .testTarget(
+            name: "AppFeatureTests",
+            dependencies: [
+                "AppFeature",
+                "APIClient",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        )
     ]
 )
