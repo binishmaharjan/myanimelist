@@ -13,9 +13,6 @@ jobs:
       
       - name: "Check Applications List"
         run: ls -la /Applications/
-        
-      - name: "Check Installed Simjlator List"
-        run: xcrun simctl list
       
       - name: "Change Xcode Version to 15.0"
         run: sudo xcode-select --switch /Applications/Xcode_15.0.app
