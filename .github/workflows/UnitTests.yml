@@ -1,0 +1,19 @@
+name: UnitTests
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '14.1.0'
+
+      - name: UnitTests
+        run: xcodebuild test -project App/Project/Development/Development.xcodeproj -scheme Development -sdk iphonesimulator -destination platform='iOS Simulator,name=iPhone 12,OS=16.1'
