@@ -11,6 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
+      - name: "Check Applications"
+        run: ls -la /Applications/
+      
       - name: "Change Xcode Version to 15.0"
         run: sudo xcode-select --switch /Applications/Xcode_15.0.app
       
