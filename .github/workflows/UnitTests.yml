@@ -10,5 +10,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
       - name: UnitTests
-        run: xcodebuild test -project App/Projects/Development/Development.xcodeproj -scheme Development -sdk iphonesimulator -destination platform='iOS Simulator,name=iPhone 14'
+        run: xcodebuild test -project App/Projects/Development/Development.xcodeproj/ -scheme Development -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 14"
