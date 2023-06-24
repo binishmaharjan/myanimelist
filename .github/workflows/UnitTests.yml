@@ -15,4 +15,4 @@ jobs:
         run: sudo xcode-select --switch /Applications/Xcode_15.0.app
       
       - name: UnitTests
-        run: xcodebuild test -project App/Projects/Development/Development.xcodeproj/ -scheme Development -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 14"
+        run: xcodebuild test -workspace ${GITHUB_WORKSPACE}/App/MyAnimeList.xcworkspace/ -scheme Development -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14,OS=17.0'
