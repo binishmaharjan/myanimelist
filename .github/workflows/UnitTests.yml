@@ -11,5 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
+      - name: "Change Xcode Version to 15.0"
+        run: sudo xcode-select --switch /Applications/Xcode_15.0.ap
+      
       - name: UnitTests
         run: xcodebuild test -project App/Projects/Development/Development.xcodeproj/ -scheme Development -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 14"
