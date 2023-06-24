@@ -33,7 +33,7 @@ extension DependencyValues {
 // MARK: Dependency(Test and Live Value)
 extension AppVersion: DependencyKey {
     public static let liveValue = Self.current
-    public static let testValue = Self.current
+    public static let testValue = Self(major: 1, minor: 0, patch: 0)
     public static let previewValue = Self(major: 1, minor: 0, patch: 0)
 }
 

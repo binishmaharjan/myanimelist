@@ -95,7 +95,11 @@ let package = Package(
         ),
         .testTarget(
             name: "AppFeatureTests",
-            dependencies: ["AppFeature"]
+            dependencies: [
+                "AppFeature",
+                "APIClient",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         )
     ]
 )
