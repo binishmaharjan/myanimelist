@@ -97,6 +97,7 @@ private struct FullScreenLoadingViewPreview: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     FullScreenLoadingViewPreview()
 }

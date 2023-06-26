@@ -66,6 +66,7 @@ private struct AppNavigationViewPreview: UIViewControllerRepresentable {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     AppNavigationViewPreview()
         .ignoresSafeArea()

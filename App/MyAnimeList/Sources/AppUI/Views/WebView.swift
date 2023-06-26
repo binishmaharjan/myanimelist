@@ -95,6 +95,7 @@ public struct WebView: UIViewControllerRepresentable {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     WebView(url: URL(string: "https://www.example.com")!)
         .bottomFloatingButton("Agree", action: {})

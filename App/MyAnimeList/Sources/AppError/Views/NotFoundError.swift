@@ -33,6 +33,7 @@ struct NotFoundErrorView: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     NotFoundErrorView(
         message: "Please wait a while and try again.",

@@ -142,6 +142,7 @@ struct SignInView: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     SignInView(
         store: .init(

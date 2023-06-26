@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "MyAnimeList",
     defaultLocalization: "en",
-    platforms: [.iOS(.v17)],
+    platforms: [.iOS(.v16)],
     products: [
         .library(name: "MyAnimeList", targets: ["MyAnimeList"]),
         .library(name: "AppFeature", targets: ["AppFeature"]),

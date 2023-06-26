@@ -143,6 +143,7 @@ public struct SignUpView: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     SignUpView(
         store: .init(

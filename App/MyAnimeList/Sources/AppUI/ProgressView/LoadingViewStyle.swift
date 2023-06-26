@@ -91,6 +91,7 @@ public struct LoadingViewStyle<Background: ShapeStyle>: ProgressViewStyle {
 }
 
 // MARK: Preview
+@available(iOS 17.0, *)
 #Preview {
     VStack(spacing: 0) {
         ProgressView()

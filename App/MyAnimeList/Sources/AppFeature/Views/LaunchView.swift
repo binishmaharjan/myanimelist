@@ -30,17 +30,19 @@ struct LaunchView: View {
     }
 }
 
-#Preview {
-    let store: StoreOf<Launch> = .init(initialState: .init(), reducer: Launch())
-    return LaunchView(store: store)
-        .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
-        .previewDisplayName("iPhone 14")
-}
-
-#Preview {
-    let store: StoreOf<Launch> = .init(initialState: .init(), reducer: Launch())
-    return LaunchView(store: store)
-        .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
-        .preferredColorScheme(.dark)
-        .previewDisplayName("iPhone 14 Dark")
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    let store: StoreOf<Launch> = .init(initialState: .init(), reducer: Launch())
+//    return LaunchView(store: store)
+//        .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+//        .previewDisplayName("iPhone 14")
+//}
+//
+//@available(iOS 17.0, *)
+//#Preview {
+//    let store: StoreOf<Launch> = .init(initialState: .init(), reducer: Launch())
+//    return LaunchView(store: store)
+//        .previewDevice(PreviewDevice(rawValue: "iPhone 14"))
+//        .preferredColorScheme(.dark)
+//        .previewDisplayName("iPhone 14 Dark")
+//}

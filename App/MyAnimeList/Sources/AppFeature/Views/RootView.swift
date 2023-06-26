@@ -53,6 +53,7 @@ public struct RootView: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     RootView(store: .init(initialState: .init(), reducer: Root()))
 }

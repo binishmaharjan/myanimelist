@@ -66,6 +66,7 @@ private struct AgreementView: View {
 
 // MARK: Preview
 
+@available(iOS 17.0, *)
 #Preview {
     TermsOfUseView(
         store: .init(

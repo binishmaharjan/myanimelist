@@ -111,6 +111,7 @@ private struct BottomFloatingButtonPreview: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     NavigationView {
         BottomFloatingButtonPreview()
@@ -121,6 +122,7 @@ private struct BottomFloatingButtonPreview: View {
     .previewDisplayName("iPhone 13")
 }
 
+@available(iOS 17.0, *)
 #Preview {
     NavigationView {
         BottomFloatingButtonPreview()

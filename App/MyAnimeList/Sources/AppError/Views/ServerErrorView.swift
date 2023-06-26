@@ -33,6 +33,7 @@ struct ServerErrorView: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
     ServerErrorView(
         message: "Please wait a while and try again.",
@@ -42,6 +43,7 @@ struct ServerErrorView: View {
     .previewDisplayName("iPhone 8")
 }
 
+@available(iOS 17.0, *)
 #Preview {
     ServerErrorView(
         message: "Please wait a while and try again.",
