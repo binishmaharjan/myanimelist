@@ -66,12 +66,12 @@ private struct AgreementView: View {
 
 // MARK: Preview
 
-@available(iOS 17.0, *)
-#Preview {
-    TermsOfUseView(
-        store: .init(
-            initialState: .init(latestUpdateDate: .distantPast),
-            reducer: TermsOfUse()
-        )
-    )
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    TermsOfUseView(
+//        store: .init(
+//            initialState: .init(latestUpdateDate: .distantPast),
+//            reducer: TermsOfUse()
+//        )
+//    )
+//}

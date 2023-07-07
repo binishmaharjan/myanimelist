@@ -143,12 +143,12 @@ public struct SignUpView: View {
     }
 }
 
-@available(iOS 17.0, *)
-#Preview {
-    SignUpView(
-        store: .init(
-            initialState: .init(),
-            reducer: SignUp()
-        )
-    )
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    SignUpView(
+//        store: .init(
+//            initialState: .init(),
+//            reducer: SignUp()
+//        )
+//    )
+//}

@@ -91,21 +91,21 @@ public struct LoadingViewStyle<Background: ShapeStyle>: ProgressViewStyle {
 }
 
 // MARK: Preview
-@available(iOS 17.0, *)
-#Preview {
-    VStack(spacing: 0) {
-        ProgressView()
-            .progressViewStyle(.appDefault(background: .ultraThinMaterial))
-
-        ProgressView("Clear")
-            .progressViewStyle(.clear)
-            .foregroundColor(.pink)
-
-        ProgressView("Default")
-            .progressViewStyle(.appDefault)
-            .foregroundColor(Color.app(.primary))
-
-        ProgressView("Color")
-            .progressViewStyle(.appDefault(background: Color.app(.blue2)))
-    }
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    VStack(spacing: 0) {
+//        ProgressView()
+//            .progressViewStyle(.appDefault(background: .ultraThinMaterial))
+//
+//        ProgressView("Clear")
+//            .progressViewStyle(.clear)
+//            .foregroundColor(.pink)
+//
+//        ProgressView("Default")
+//            .progressViewStyle(.appDefault)
+//            .foregroundColor(Color.app(.primary))
+//
+//        ProgressView("Color")
+//            .progressViewStyle(.appDefault(background: Color.app(.blue2)))
+//    }
+//}

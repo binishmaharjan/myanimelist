@@ -27,7 +27,7 @@ public struct RootView: View {
             ZStack {
                 IfLetStore(store.scope(state: \.phase, action: Root.Action.phase)) { phaseStore in
                     SwitchStore(phaseStore) {
-                        // Launch
+                        // Launchp
                         CaseLet(state: /Root.State.Phase.launch, action: Root.Action.Phase.launch) { store in
                             LaunchView(store: store)
                         }
@@ -53,7 +53,7 @@ public struct RootView: View {
     }
 }
 
-@available(iOS 17.0, *)
-#Preview {
-    RootView(store: .init(initialState: .init(), reducer: Root()))
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    RootView(store: .init(initialState: .init(), reducer: Root()))
+//}

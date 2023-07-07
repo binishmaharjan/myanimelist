@@ -76,19 +76,19 @@ extension UIColor {
 }
 
 // MARK: Preview
-@available(iOS 17.0, *)
-#Preview {
-    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
-        ForEach(AppColor.allCases, id: \.self) { color in
-            color
-                .border(Color.gray)
-                .overlay {
-                    Text(color.rawValue)
-                        .foregroundColor(.app(color))
-                        .colorInvert()
-                }
-                .frame(height: 80)
-        }
-    }
-    .padding()
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]) {
+//        ForEach(AppColor.allCases, id: \.self) { color in
+//            color
+//                .border(Color.gray)
+//                .overlay {
+//                    Text(color.rawValue)
+//                        .foregroundColor(.app(color))
+//                        .colorInvert()
+//                }
+//                .frame(height: 80)
+//        }
+//    }
+//    .padding()
+//}

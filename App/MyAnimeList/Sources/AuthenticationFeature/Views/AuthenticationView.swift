@@ -70,7 +70,7 @@ public struct AuthenticationView: View {
     }
 }
 
-@available(iOS 17.0, *)
-#Preview {
-    AuthenticationView(store: .init(initialState: .init(), reducer: Authentication()))
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    AuthenticationView(store: .init(initialState: .init(), reducer: Authentication()))
+//}

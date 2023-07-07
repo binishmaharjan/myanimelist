@@ -19,7 +19,8 @@ final class TermsOfUseTests: XCTestCase {
         }
 
         await store.send(.agreedButtonTapped)
-        await fulfillment(of: [expectation], timeout: 0)
+        wait(for: [expectation], timeout: 0)
+//        await fulfillment(of: [expectation], timeout: 0)
         await store.receive(.delegate(.showLogin))
     }
 }

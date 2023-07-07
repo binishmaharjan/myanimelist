@@ -33,12 +33,12 @@ struct NotFoundErrorView: View {
     }
 }
 
-@available(iOS 17.0, *)
-#Preview {
-    NotFoundErrorView(
-        message: "Please wait a while and try again.",
-        retryAction: { }
-    )
-    .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-    .previewDisplayName("iPhone 8")
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    NotFoundErrorView(
+//        message: "Please wait a while and try again.",
+//        retryAction: { }
+//    )
+//    .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+//    .previewDisplayName("iPhone 8")
+//}

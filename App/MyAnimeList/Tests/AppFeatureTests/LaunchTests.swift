@@ -167,7 +167,8 @@ final class LaunchTests: XCTestCase {
 
         await store.send(.destination(.presented(.alert(.forceUpdate))))
         await store.receive(.openForceUpdateURL)
-        await fulfillment(of: [expectation], timeout: 0)
+        wait(for: [expectation], timeout: 0)
+//        await fulfillment(of: [expectation], timeout: 0)
     }
 
     func test_FetchAppConfig_Failure_ShowAlert() async {

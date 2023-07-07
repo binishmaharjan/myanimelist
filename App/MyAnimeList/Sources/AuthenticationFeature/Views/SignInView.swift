@@ -142,13 +142,13 @@ struct SignInView: View {
     }
 }
 
-@available(iOS 17.0, *)
-#Preview {
-    SignInView(
-        store: .init(
-            initialState: .init(),
-            reducer: SignIn()
-        )
-    )
-}
+//@available(iOS 17.0, *)
+//#Preview {
+//    SignInView(
+//        store: .init(
+//            initialState: .init(),
+//            reducer: SignIn()
+//        )
+//    )
+//}
 
