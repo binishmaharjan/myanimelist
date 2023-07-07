@@ -14,8 +14,8 @@ jobs:
       - name: "Check Applications List"
         run: ls -la /Applications/
       
-      - name: "Change Xcode Version to 15.0"
-        run: sudo xcode-select --switch /Applications/Xcode_15.0.app
+      - name: "Change Xcode Version to 14.2"
+        run: sudo xcode-select --switch /Applications/Xcode_14.2.app
       
       - name: UnitTests
         run: xcodebuild test -workspace ${GITHUB_WORKSPACE}/App/MyAnimeList.xcworkspace/ -scheme Development -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2'
